@@ -1,0 +1,73 @@
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font", "Roboto", sans-serif;
+    font-size: 12px; /* Ukuran font lebih kecil agar compact */
+    font-weight: bold;
+}
+
+window#waybar {
+    background: rgba(26, 27, 38, 0.85); /* Semi-transparan dark */
+    color: #c0caf5;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Grouping Left, Center, Right */
+.modules-left, .modules-center, .modules-right {
+    background: transparent;
+    padding: 0 5px;
+}
+
+/* Individual Module Styling */
+#custom-distro, #workspaces, #cpu, #memory, #clock, #pulseaudio, #network, #battery, #tray, #custom-power {
+    padding: 0 10px;
+    margin: 3px 2px;
+}
+
+/* Accent Colors */
+#custom-distro {
+    color: #7aa2f7;
+    font-size: 16px;
+}
+
+#workspaces button {
+    color: #414868;
+    padding: 0 4px;
+}
+
+#workspaces button.active {
+    color: #7aa2f7;
+    border-bottom: 2px solid #7aa2f7;
+}
+
+#cpu { color: #bb9af7; }
+#memory { color: #9ece6a; }
+
+#clock {
+    color: #e0af68;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+}
+
+#pulseaudio { color: #0db9d7; }
+#network { color: #f7768e; }
+#battery { color: #9ece6a; }
+
+#battery.warning { color: #ff9e64; }
+#battery.critical { color: #f7768e; animation: blink 0.5s infinite alternate; }
+
+#custom-power {
+    color: #f7768e;
+    padding-right: 12px;
+}
+
+@keyframes blink {
+    to { background-color: rgba(247, 118, 142, 0.5); color: #ffffff; }
+}
+
+/* Tray area */
+#tray {
+    padding-left: 5px;
+    padding-right: 5px;
+}

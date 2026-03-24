@@ -1,0 +1,32 @@
+window {
+    background-color: rgba(20, 20, 20, 0.85);
+    border-radius: 16px;
+    padding: 10px;
+}
+
+#outer-box {
+    margin: 10px;
+}
+
+#input {
+    margin: 10px;
+    padding: 8px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgba(40, 40, 40, 0.8);
+    color: white;
+}
+
+#entry {
+    border-radius: 12px;
+    padding: 6px;
+    margin: 5px;
+}
+
+#entry:selected {
+    background: linear-gradient(135deg, #7aa2f7, #bb9af7);
+}
+
+#img {
+    border-radius: 12px;
+}
