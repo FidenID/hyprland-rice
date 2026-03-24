@@ -1,0 +1,112 @@
+* {
+    /* Warna Background (RGBA: Hitam dengan transparansi 70%) */
+    bg-col:  #111111b3; 
+    bg-col-light: #1e1e2ea0; /* Transparansi sedikit lebih terang */
+    
+    /* Ganti BIRU jadi Putih Agak Gelap (Greyish White) */
+    border-col: #a6adc8; /* Untuk garis pinggir */
+    fg-dim: #bac2de;     /* Untuk teks tidak terpilih & prompt */
+    
+    /* Warna saat item dipilih (Sedikit lebih terang dari bg) */
+    selected-col: #31324480; 
+    
+    /* Warna Teks Utama (Putih Terang) */
+    fg-col: #cdd6f4;
+    
+    /* Warna Teks saat dipilih (Putih Bersih) */
+    fg-col2: #ffffff;
+
+    width: 600;
+    font: "JetBrainsMono Nerd Font 11";
+}
+
+element-text, element-icon , mode-switcher {
+    background-color: inherit;
+    text-color:       inherit;
+}
+
+window {
+    height: 360px;
+    border: 2px; /* Border sedikit lebih tipis agar elegan */
+    border-color: @border-col;
+    background-color: @bg-col;
+    border-radius: 12px;
+}
+
+mainbox {
+    background-color: transparent; /* Pastikan mainbox transparan */
+}
+
+inputbar {
+    children: [prompt,entry];
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+prompt {
+    /* Kotak 'Apps' pakai warna putih redup */
+    background-color: @border-col;
+    padding: 6px;
+    text-color: #111111; /* Teks di dalam kotak prompt jadi hitam agar kontras */
+    border-radius: 3px;
+    margin: 20px 0px 0px 20px;
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: ":";
+}
+
+entry {
+    padding: 6px;
+    margin: 20px 0px 0px 10px;
+    text-color: @fg-col;
+    background-color: transparent;
+}
+
+listview {
+    border: 0px 0px 0px;
+    padding: 6px 0px 0px;
+    margin: 10px 0px 0px 20px;
+    columns: 2;
+    lines: 5;
+    background-color: transparent;
+}
+
+element {
+    padding: 5px;
+    background-color: transparent;
+    text-color: @fg-dim; /* Teks item biasa agak redup */
+}
+
+element-icon {
+    size: 25px;
+    margin: 0 10px 0 0;
+}
+
+element selected {
+    background-color:  @selected-col;
+    text-color: @fg-col2; /* Teks item terpilih putih terang */
+    border-radius: 5px;
+}
+
+mode-switcher {
+    spacing: 0;
+    background-color: transparent;
+}
+
+button {
+    padding: 10px;
+    background-color: transparent;
+    text-color: @fg-dim;
+    vertical-align: 0.5; 
+    horizontal-align: 0.5;
+}
+
+button selected {
+  /* Tab bawah yang dipilih */
+  background-color: #31324450;
+  text-color: @fg-col2;
+  border-radius: 5px;
+}
