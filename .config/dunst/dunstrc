@@ -1,4 +1,5 @@
 [global]
+    # --- Tampilan Utama ---
     monitor = 0
     follow = mouse
     width = 300
@@ -7,54 +8,65 @@
     offset = 10x30
     scale = 0
     notification_limit = 5
+
+    # --- Transparansi & Warna ---
+    # transparency: 0-100 (0=opaque, 100=invisible)
+    # Gunakan compositor (picom) untuk hasil terbaik
+    transparency = 10 
+    separator_height = 2
+    padding = 10
+    horizontal_padding = 10
+    text_icon_padding = 10
+    frame_width = 2
     
-    # Estetika & Font
-    font = JetBrainsMono Nerd Font 10
+    # Border & Warna Transparan (RGBA atau Hex)
+    # Latar belakang hitam transparan
+    background = "#1a1a1a" 
+    foreground = "#eeeeee"
+    frame_color = "#333333"
+    separator_color = frame
+
+    # --- Font & Tampilan ---
+    font = DejaVu Sans Medium 10
+    line_height = 4
     markup = full
     format = "<b>%s</b>\n%b"
     alignment = left
-    vertical_alignment = center
     show_age_threshold = 60
     ellipsize = middle
     ignore_newline = no
     stack_duplicates = true
     hide_duplicate_count = false
     show_indicators = yes
-    
-    # Warna & Gaya (Nord Dark Theme)
-    frame_width = 2
-    frame_color = "#4C566A"
-    separator_color = frame
-    
-    # Sudut melengkung
-    corner_radius = 8
 
-    # Ikon
+    # --- Ikon ---
     icon_position = left
     min_icon_size = 32
-    max_icon_size = 48
+    max_icon_size = 32
+    icon_path = /usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x16/devices/
 
-[shortcuts]
-    close = ctrl+space
-    close_all = ctrl+shift+space
-    history = ctrl+grave
-    context = ctrl+shift+period
+    # --- Perilaku ---
+    dmenu = /usr/bin/dmenu -p dunst:
+    browser = /usr/bin/firefox -new-tab
+    always_run_script = true
+    title = Dunst
+    class = Dunst
 
 [urgency_low]
-    background = "#2E3440"
-    foreground = "#D8DEE9"
-    frame_color = "#4C566A"
+    background = "#1a1a1a"
+    foreground = "#888888"
+    frame_color = "#222222"
     timeout = 5
 
 [urgency_normal]
-    background = "#3B4252"
-    foreground = "#E5E9F0"
-    frame_color = "#81A1C1"
+    background = "#1a1a1a"
+    foreground = "#eeeeee"
+    frame_color = "#444444"
     timeout = 10
 
 [urgency_critical]
-    background = "#BF616A"
-    foreground = "#ECEFF4"
-    frame_color = "#BF616A"
+    background = "#1a1a1a"
+    foreground = "#ffffff"
+    frame_color = "#ff5555" # Merah sedikit untuk notifikasi kritis
     timeout = 0
 
