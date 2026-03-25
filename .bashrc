@@ -15,16 +15,15 @@ PS1='\[\e[1;35m\][~]\[\e[0m\] \[\e[1;36m\]\W\[\e[0m\] \[\e[1;32m\] >\[\e[0m\]
 ###################
 ##UNTUK FASTFETCH##
 ###################
-
 echo
 
 fastfetch
 
-#####################
-#####################
-####################
 
 
+#####################
+####LAUNCH WAYBAR####
+#####################
 alias w1="bash ~/.config/waybar/launch-waybar.sh 1"
 alias w2="bash ~/.config/waybar/launch-waybar.sh 2"
 alias w3="bash ~/.config/waybar/launch-waybar.sh 3"
