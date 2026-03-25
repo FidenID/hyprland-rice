@@ -1,0 +1,66 @@
+{
+  "$schema": "https://github.com",
+  "logo": {
+    "source": "arch_small", // Menggunakan logo versi kecil agar pas dengan teks
+    "padding": {
+      "top": 1,
+      "left": 2
+    },
+    "color": {
+      "1": "cyan" // Warna biru khas Arch
+    }
+  },
+  "display": {
+    "separator": " ➜ ",
+    "color": {
+      "keys": "cyan"
+    }
+  },
+  "modules": [
+    {
+      "type": "title",
+      "color": {
+        "user": "magenta",
+        "at": "white",
+        "host": "blue"
+      }
+    },
+    {
+      "type": "os",
+      "key": " ",
+      "format": "{3} {10}" // Menampilkan nama distro + arsitektur (e.g. Arch Linux x86_64)
+    },
+    {
+      "type": "kernel",
+      "key": "   ",
+      "format": "{2}"
+    },
+    {
+      "type": "uptime",
+      "key": "   "
+    },
+    {
+      "type": "packages",
+      "key": "   "
+    },
+    {
+      "type": "shell",
+      "key": "   "
+    },
+    {
+      "type": "terminal",
+      "key": "   "
+    },
+    {
+      "type": "memory",
+      "key": "   ",
+      "format": "{1} / {2} ({3})"
+    },
+    "break",
+    {
+      "type": "colors",
+      "symbol": "circle" // Menampilkan palet warna berbentuk lingkaran di bawah
+    }
+  ]
+}
+
