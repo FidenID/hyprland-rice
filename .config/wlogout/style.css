@@ -1,45 +1,35 @@
-window {
+* {
+    background-image: none;
     font-family: "JetBrainsMono Nerd Font", sans-serif;
-    font-size: 15px;
-    color: #cdd6f4; /* Catppuccin Mocha Text */
-    background-color: rgba(30, 30, 46, 0.5); /* Semi-transparent background */
+}
+
+window {
+    background-color: rgba(0, 0, 0, 0.5); /* Overlay gelap transparan */
 }
 
 button {
-    background-color: rgba(49, 50, 68, 0.6);
-    border: 2px solid rgba(137, 180, 250, 0.5);
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    margin: 10px;
-    color: #cdd6f4;
-    transition: all 0.3s ease;
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.05); /* Putih sangat tipis */
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    margin: 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25%;
+    transition: all 0.3s cubic-bezier(.55, 0.0, .28, 1.4); /* Efek pop-out */
 }
 
-button:hover {
-    background-color: rgba(137, 180, 250, 0.3);
-    border: 2px solid rgba(137, 180, 250, 1);
+button:focus, button:active, button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    outline-style: none;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    background-size: 30%; /* Ikon sedikit membesar saat hover */
 }
 
-#lock {
-    background-image: image(url("/usr/share/wlogout/icons/lock.png"));
-}
-
-#logout {
-    background-image: image(url("/usr/share/wlogout/icons/logout.png"));
-}
-
-#suspend {
-    background-image: image(url("/usr/share/wlogout/icons/suspend.png"));
-}
-
-#hibernate {
-    background-image: image(url("/usr/share/wlogout/icons/hibernate.png"));
-}
-
-#shutdown {
-    background-image: image(url("/usr/share/wlogout/icons/shutdown.png"));
-}
-
-#reboot {
-    background-image: image(url("/usr/share/wlogout/icons/reboot.png"));
-}
+/* Penempatan Ikon (Pastikan path file SVG benar) */
+#lock { background-image: image(url("/usr/share/wlogout/icons/lock.png"), url("~/.config/wlogout/icons/lock.png")); }
+#logout { background-image: image(url("/usr/share/wlogout/icons/logout.png"), url("~/.config/wlogout/icons/logout.png")); }
+#suspend { background-image: image(url("/usr/share/wlogout/icons/suspend.png"), url("~/.config/wlogout/icons/suspend.png")); }
+#hibernate { background-image: image(url("/usr/share/wlogout/icons/hibernate.png"), url("~/.config/wlogout/icons/hibernate.png")); }
+#shutdown { background-image: image(url("/usr/share/wlogout/icons/shutdown.png"), url("~/.config/wlogout/icons/shutdown.png")); }
+#reboot { background-image: image(url("/usr/share/wlogout/icons/reboot.png"), url("~/.config/wlogout/icons/reboot.png")); }
