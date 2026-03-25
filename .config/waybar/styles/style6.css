@@ -1,0 +1,72 @@
+* {
+    border: none;
+    border-radius: 10px;
+    font-family: "JetBrainsMono Nerd Font", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: rgba(26, 27, 38, 0.7);
+    color: #c0caf5;
+    border: 1px solid rgba(122, 162, 247, 0.3);
+}
+
+/* Modul Umum */
+#workspaces,
+#window,
+#clock,
+#pulseaudio,
+#network,
+#cpu,
+#memory,
+#battery,
+#tray {
+    padding: 0 12px;
+    background-color: rgba(41, 42, 60, 0.5);
+    margin: 4px 3px;
+    border: 1px solid rgba(122, 162, 247, 0.1);
+}
+
+/* Kiri: Workspaces & Window */
+#workspaces button {
+    padding: 0 5px;
+    color: #565f89;
+    background: transparent;
+    border: none;
+}
+
+#workspaces button.active {
+    color: #7aa2f7;
+}
+
+#workspaces button.urgent {
+    color: #f7768e;
+}
+
+#window {
+    color: #9ece6a;
+    font-weight: bold;
+    background: transparent;
+    border: none;
+}
+
+/* Tengah: Clock */
+#clock {
+    color: #bb9af7;
+    font-weight: bold;
+}
+
+/* Kanan: Stats */
+#pulseaudio { color: #e0af68; }
+#network { color: #7dcfff; }
+#cpu { color: #f7768e; }
+#memory { color: #9ece6a; }
+#battery { color: #9ece6a; }
+#battery.warning { color: #e0af68; }
+#battery.critical { color: #f7768e; }
+
+#tray {
+    background-color: rgba(41, 42, 60, 0.5);
+}
+

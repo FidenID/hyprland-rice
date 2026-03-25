@@ -1,0 +1,80 @@
+/* Nordic-inspired Soft Theme */
+@define-color nord0 #2e3440; /* Darker grey */
+@define-color nord1 #3b4252;
+@define-color nord2 #434c5e;
+@define-color nord3 #4c566a;
+@define-color nord4 #d8dee9; /* Main text - soft white */
+@define-color nord5 #e5e9f0;
+@define-color nord6 #eceff4;
+@define-color nord7 #8fbcbb; /* Cyan accent */
+@define-color nord8 #88c0d0; /* Bright cyan */
+@define-color nord9 #81a1c1; /* Soft blue */
+@define-color nord10 #5e81ac; /* Darker blue */
+
+* {
+    border: none;
+    font-family: "JetBrainsMono Nerd Font", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: rgba(67, 76, 94, 0.8); /* Semi-transparent nord2 */
+    color: @nord6;
+    border-radius: 10px;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    color: @nord6;
+    border-radius: 5px;
+}
+
+#workspaces button.active {
+    background-color: @nord8;
+    color: @nord0;
+}
+
+#workspaces button:hover {
+    background-color: @nord9;
+    color: @nord0;
+}
+
+#clock,
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#tray {
+    padding: 0 10px;
+    color: @nord6;
+    background-color: @nord3;
+    margin: 2px 3px;
+    border-radius: 8px;
+}
+
+#clock {
+    background-color: @nord10;
+    font-weight: bold;
+}
+
+#network {
+    color: @nord7;
+}
+
+#pulseaudio {
+    color: @nord5;
+}
+
+#cpu {
+    color: @nord4;
+}
+
+#memory {
+    color: @nord4;
+}
+
+
