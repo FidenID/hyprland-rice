@@ -1,0 +1,5 @@
+XDG_DOWNLOAD_DIR="/mnt/data/Downloads"
+XDG_DOCUMENTS_DIR="/mnt/data/Documents"
+XDG_MUSIC_DIR="/mnt/data/Music"
+XDG_PICTURES_DIR="/mnt/data/Pictures"
+XDG_VIDEOS_DIR="/mnt/data/Videos"
