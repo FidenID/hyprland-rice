@@ -21,14 +21,41 @@
 
 ## ✨ Components
 
-| Component      | Tool                     |
-|----------------|--------------------------|
-| 🖥️ Compositor   | [Hyprland](https://hyprland.org/) |
-| 📊 Bar          | [Waybar](https://github.com/Alexays/Waybar) |
-| 🔒 Lockscreen   | [Hyprlock](https://github.com/hyprwm/hyprlock) |
-| 🔔 Notification | [Dunst](https://dunst-project.org/) / [Swaync](https://github.com/ErikReider/SwayNotificationCenter) |
-| 💻 Terminal     | [Kitty](https://sw.kovidgoyal.net/kitty/) / [Alacritty](https://alacritty.org/) |
-| 🐧 Distro       | [Arch Linux](https://archlinux.org/) |
+| Component       | Tool                                                                 |
+|-----------------|----------------------------------------------------------------------|
+| 🖥️ Compositor    | [Hyprland](https://hyprland.org/)                                   |
+| 📊 Bar           | [Waybar](https://github.com/Alexays/Waybar) — 5 style variants      |
+| 🌅 Wallpaper     | [Waypaper](https://github.com/anufrievroman/waypaper)               |
+| 🔒 Lockscreen    | [Hyprlock](https://github.com/hyprwm/hyprlock)                      |
+| 🔔 Notification  | [Dunst](https://dunst-project.org/) / [Swaync](https://github.com/ErikReider/SwayNotificationCenter) |
+| 💻 Terminal      | [Kitty](https://sw.kovidgoyal.net/kitty/)                           |
+| 🐧 Distro        | [Arch Linux](https://archlinux.org/)                                |
+
+---
+
+## 🎨 Waybar Variants
+
+Rice ini dilengkapi **5 varian Waybar** dengan style dan warna yang berbeda-beda. Ganti varian langsung dari terminal menggunakan perintah berikut:
+
+| Perintah | Varian         |
+|----------|----------------|
+| `w1`     | Waybar Style 1 |
+| `w2`     | Waybar Style 2 |
+| `w3`     | Waybar Style 3 |
+| `w4`     | Waybar Style 4 |
+| `w5`     | Waybar Style 5 |
+
+Cukup ketik perintahnya di terminal Kitty, dan Waybar akan langsung berganti tampilan.
+
+---
+
+## 🖼️ Wallpaper
+
+Wallpaper dikelola menggunakan **Waypaper** — GUI wallpaper picker yang ringan dan mudah digunakan.
+
+```bash
+waypaper
+```
 
 ---
 
@@ -37,12 +64,17 @@
 ```
 hyprland-rice/
 ├── .config/
-│   ├── hypr/          # Hyprland config
-│   ├── waybar/        # Waybar config & style
-│   ├── hyprlock/      # Lockscreen config
-│   ├── dunst/         # Notification daemon config
-│   └── kitty/         # Terminal config
-├── install.sh         # Automated install script
+│   ├── hypr/           # Hyprland config
+│   ├── waybar/
+│   │   ├── style1.css  # Style varian 1
+│   │   ├── style2.css  # Style varian 2
+│   │   ├── style3.css  # Style varian 3
+│   │   ├── style4.css  # Style varian 4
+│   │   ├── style5.css  # Style varian 5
+│   │   └── config      # Waybar modules config
+│   ├── hyprlock/       # Lockscreen config
+│   ├── dunst/          # Notification daemon config
+│   └── kitty/          # Terminal config
 └── README.md
 ```
 
@@ -52,41 +84,26 @@ hyprland-rice/
 
 ### Prerequisites
 
-Pastikan kamu sudah menginstall **Arch Linux** dengan **Hyprland** sebelumnya.
+Pastikan sudah menginstall **Arch Linux** dengan **Hyprland** terlebih dahulu.
 
-**Install dependencies yang diperlukan:**
+**Install dependencies:**
 
 ```bash
 sudo pacman -S hyprland waybar hyprlock dunst kitty
+yay -S waypaper  # dari AUR
 ```
-
-> Untuk package AUR, gunakan AUR helper seperti `yay` atau `paru`.
 
 ---
 
-### ⚡ Quick Install (Otomatis)
-
-```bash
-git clone https://github.com/FidenID/hyprland-rice.git
-cd hyprland-rice
-chmod +x install.sh
-./install.sh
-```
-
-Script `install.sh` akan otomatis menyalin semua config ke direktori yang sesuai.
-
----
-
-### 🛠️ Manual Install
-
-Jika ingin install secara manual:
+### 📥 Manual Install
 
 ```bash
 git clone https://github.com/FidenID/hyprland-rice.git
 cd hyprland-rice
 
-# Backup config lama (opsional)
+# Backup config lama (opsional tapi disarankan)
 cp -r ~/.config/hypr ~/.config/hypr.bak
+cp -r ~/.config/waybar ~/.config/waybar.bak
 
 # Copy semua config
 cp -r .config/* ~/.config/
@@ -96,17 +113,23 @@ Kemudian restart Hyprland untuk menerapkan perubahan.
 
 ---
 
-## ⌨️ Keybindings
+### ⚙️ Setup Waybar Shortcuts
 
-> _Tambahkan keybinding utama kamu di sini, contoh:_
+Pastikan alias `w1`–`w5` sudah ada di shell config kamu (`~/.bashrc` atau `~/.zshrc`):
 
-| Keybind | Action |
-|---------|--------|
-| `SUPER + T` | Open Terminal |
-| `SUPER + Q` | Close Window |
-| `SUPER + L` | Lock Screen |
-| `SUPER + F` | Toggle Fullscreen |
-| `SUPER + Space` | Open Launcher |
+```bash
+alias w1="~/.config/waybar/launch.sh 1"
+alias w2="~/.config/waybar/launch.sh 2"
+alias w3="~/.config/waybar/launch.sh 3"
+alias w4="~/.config/waybar/launch.sh 4"
+alias w5="~/.config/waybar/launch.sh 5"
+```
+
+Setelah itu reload shell:
+
+```bash
+source ~/.bashrc   # atau source ~/.zshrc
+```
 
 ---
 
