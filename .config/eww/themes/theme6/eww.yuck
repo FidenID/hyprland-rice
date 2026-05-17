@@ -1,0 +1,74 @@
+;; --- POLLS ---
+(defpoll username    :interval "9999s" `whoami`)
+(defpoll uptime      :interval "60s"   `uptime -p | sed 's/up //'`)
+(defpoll bat-percent :interval "30s"   `cat /sys/class/power_supply/BAT1/capacity 2>/dev/null || echo 0`)
+(defpoll cpu-usage   :interval "3s"    `top -bn1 | grep "Cpu(s)" | awk '{print int($2)}'`)
+(defpoll ram-usage   :interval "5s"    `free | awk '/Mem:/{printf "%d", $3/$2*100}'`)
+(defpoll volume      :interval "1s"    `wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf "%d", $2*100}' || echo 0`)
+
+;; Music Polls
+(defpoll music-title  :interval "1s" `playerctl metadata title || echo "Not Playing"`)
+(defpoll music-artist :interval "1s" `playerctl metadata artist || echo "Unknown Artist"`)
+(defpoll music-art    :interval "2s" `playerctl metadata mpris:artUrl || echo ""`)
+(defpoll music-status :interval "1s" `playerctl status || echo "Stopped"`)
+
+;; --- WIDGETS ---
+(defwidget sidebar []
+  (box :class "sidebar-root" :orientation "v" :space-evenly false :spacing 10
+    
+    ;; PROFILE SECTION
+    (box :class "profile-box" :orientation "h" :space-evenly false :spacing 15
+      (box :class "avatar-wrap"
+        (box :class "avatar" :style "background-image: url('/home/miko/.config/eww/assets/avatar.png');"))
+      (box :orientation "v" :valign "center" :hexpand true
+        (label :class "username" :text "Miko" :halign "start")
+        (label :class "uptime-text" :text "up ${uptime}" :halign "start")))
+
+    (box :class "divider")
+
+    ;; STATS RINGS (With Numbers)
+    (box :class "rings-box" :orientation "h" :space-evenly true
+      (box :orientation "v" :spacing 5
+        (overlay
+          (circular-progress :value cpu-usage :thickness 10 :class "cpu-ring" (label :text ""))
+          (label :text "${cpu-usage}%" :class "ring-value"))
+        (label :text "CPU" :class "ring-label"))
+      (box :orientation "v" :spacing 5
+        (overlay
+          (circular-progress :value ram-usage :thickness 10 :class "ram-ring" (label :text ""))
+          (label :text "${ram-usage}%" :class "ring-value"))
+        (label :text "RAM" :class "ring-label")))
+
+    (box :class "divider")
+
+    ;; MUSIC PLAYER SECTION
+    (box :class "music-card" :orientation "h" :spacing 12 :space-evenly false
+      (box :class "album-art" :style "background-image: url('${music-art}');")
+      (box :orientation "v" :valign "center" :hexpand true
+        (label :class "music-title" :text music-title :limit-width 15 :halign "start")
+        (label :class "music-artist" :text music-artist :limit-width 20 :halign "start")
+        (box :class "music-controls" :orientation "h" :halign "start" :spacing 10
+          (button :onclick "playerctl previous" "󰒮")
+          (button :onclick "playerctl play-pause" {music-status == "Playing" ? "󰏤" : "󰐊"})
+          (button :onclick "playerctl next" "󰒭"))))
+
+    (box :class "divider")
+
+    ;; VOLUME SLIDER
+    (box :class "slider-box" :orientation "h" :spacing 10 :space-evenly false
+      (label :text "󰕾" :class "sl-icon")
+      (scale :class "vol-slider" :hexpand true :min 0 :max 101 :value volume :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%")
+      (label :text "${volume}%" :class "sl-val"))
+
+    ;; POWER BUTTONS
+    (box :class "power-box" :orientation "h" :space-evenly true :spacing 10
+      (button :class "power-btn shutdown" :onclick "systemctl poweroff" "󰐥")
+      (button :class "power-btn reboot" :onclick "systemctl reboot" "󰜉")
+      (button :class "power-btn lock" :onclick "hyprlock" "󰍁"))
+  ))
+
+(defwindow sidebar-window
+  :monitor 0
+  :geometry (geometry :x "15px" :y "15px" :width "320px" :anchor "top right")
+  :stacking "overlay"
+  (sidebar))

@@ -71,3 +71,21 @@ window#waybar {
     padding-left: 5px;
     padding-right: 5px;
 }
+
+
+#custom-eww-toggle {
+    font-size: 16px;
+    color: #64b4ff;
+    background: rgba(100, 180, 255, 0.1);
+    border: 1px solid rgba(100, 180, 255, 0.2);
+    border-radius: 8px;
+    padding: 0 10px;
+    margin: 4px 4px;
+    transition: all 0.2s;
+}
+
+#custom-eww-toggle:hover {
+    color: #00e5ff;
+    background: rgba(100, 180, 255, 0.2);
+    box-shadow: 0 0 10px rgba(100, 180, 255, 0.3);
+}

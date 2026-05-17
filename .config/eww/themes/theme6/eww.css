@@ -1,0 +1,51 @@
+* { all: unset; font-family: "JetBrainsMono Nerd Font", sans-serif; }
+
+.sidebar-root { 
+    background-color: #1e1e2e; 
+    border: 2px solid #313244; 
+    border-radius: 24px; 
+    padding: 20px;
+}
+
+/* Profile */
+.avatar-wrap { 
+    background: linear-gradient(to bottom, #89b4fa, #cba6f7);
+    padding: 3px; border-radius: 15px; 
+}
+.avatar { 
+    min-width: 55px; min-height: 55px; 
+    border-radius: 12px; background-size: cover; background-position: center;
+    background-color: #313244;
+}
+.username { font-size: 18px; font-weight: bold; color: #cdd6f4; }
+.uptime-text { font-size: 11px; color: #a6adc8; }
+
+/* Stats Rings & Values */
+circular-progress { min-height: 75px; min-width: 75px; background-color: #313244; }
+.cpu-ring { color: #f38ba8; }
+.ram-ring { color: #89b4fa; }
+.ring-value { font-size: 12px; font-weight: bold; color: #cdd6f4; }
+.ring-label { font-size: 11px; color: #bac2de; margin-top: 5px; }
+
+/* Music Card */
+.music-card { 
+    background-color: #313244; 
+    padding: 12px; border-radius: 16px; 
+}
+.album-art { 
+    min-width: 60px; min-height: 60px; 
+    border-radius: 10px; background-size: cover; 
+    background-color: #1e1e2e;
+}
+.music-title { font-size: 14px; font-weight: bold; color: #cdd6f4; }
+.music-artist { font-size: 11px; color: #a6adc8; }
+.music-controls button { font-size: 18px; color: #89b4fa; margin-top: 5px; }
+
+/* Divider */
+.divider { background-color: #313244; min-height: 2px; margin: 15px 5px; }
+
+/* Slider & Power */
+scale trough { background-color: #313244; border-radius: 10px; min-height: 10px; }
+scale highlight { background-color: #89b4fa; border-radius: 10px; }
+.power-btn { background-color: #313244; padding: 12px; border-radius: 12px; font-size: 20px; }
+.shutdown { color: #f38ba8; } .reboot { color: #fab387; } .lock { color: #f9e2af; }

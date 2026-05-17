@@ -42,9 +42,11 @@
         "format-disconnected": "   Disconnected"
     },
     "custom/power": {
-        "format": "⏻",
-        "on-click": "wlogout",
-        "tooltip": false
+        "format": "󰮯",
+    	"tooltip": false,
+   	"on-click": "eww open --toggle sidebar-window",
+   	"on-click-right": "eww kill",
+   	"interval": "once"
     }
 }
 

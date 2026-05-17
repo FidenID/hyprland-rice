@@ -1,0 +1,6 @@
+* {
+  bg: rgba(10,10,20,0.72);
+  bg-selected: rgba(122,162,247,0.15);
+  fg: #cdd6f4;
+  border-fixed: rgba(122,162,247,0.25);
+}

@@ -124,6 +124,13 @@
     "scroll-step": 5,
     "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
     "on-click-right": "pavucontrol"
-  }
+  },
+  "custom/power": {
+        "format": "󰮯",
+    	"tooltip": false,
+   	"on-click": "eww open --toggle sidebar-window",
+   	"on-click-right": "eww kill",
+   	"interval": "once"
+    },
 }
 

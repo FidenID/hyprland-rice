@@ -1,0 +1,174 @@
+;;; ============================================================
+;;;  eww.yuck — Compact One-Box Sidebar — No Scroll
+;;; ============================================================
+
+;;; POLLS
+(defpoll username     :interval "9999s" :initial "user"        `whoami`)
+(defpoll uptime       :interval "60s"   :initial "0m"          `uptime -p | sed 's/up //'`)
+(defpoll bat-percent  :interval "30s"   :initial "0"           `cat /sys/class/power_supply/BAT0/capacity 2>/dev/null || echo 0`)
+(defpoll bat-status   :interval "30s"   :initial "Full"        `cat /sys/class/power_supply/BAT0/status 2>/dev/null || echo Full`)
+(defpoll bat-time     :interval "60s"   :initial "0 h 0 min"   `acpi -b 2>/dev/null | grep -oP '\d+:\d+:\d+' | head -1 | awk -F: '{print $1" h "$2" min"}' || echo "0 h 0 min"`)
+(defpoll cpu-usage    :interval "3s"    :initial "0"           `top -bn1 | grep "Cpu(s)" | awk '{print int($2)}'`)
+(defpoll cpu-used-ghz :interval "3s"    :initial "0.0"         `awk '{printf "%.1f", $1/1000000}' /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq 2>/dev/null || echo "0.0"`)
+(defpoll ram-usage    :interval "5s"    :initial "0"           `free | awk '/Mem:/{printf "%d", $3/$2*100}'`)
+(defpoll ram-used-gb  :interval "5s"    :initial "0.0"         `free -h | awk '/Mem:/{print $3}'`)
+(defpoll ram-total-gb :interval "60s"   :initial "0"           `free -h | awk '/Mem:/{print $2}'`)
+(defpoll disk-usage   :interval "30s"   :initial "0"           `df -h / | awk 'NR==2{print int($5)}'`)
+(defpoll disk-used    :interval "30s"   :initial "0G"          `df -h / | awk 'NR==2{print $3}'`)
+(defpoll disk-total   :interval "30s"   :initial "0G"          `df -h / | awk 'NR==2{print $2}'`)
+(defpoll volume       :interval "2s"    :initial "50"          `wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null | awk '{printf "%d", $2*100}' || echo 50`)
+(defpoll brightness :interval "2s" :initial "80"
+  `brightnessctl -m 2>/dev/null | awk -F, '{print int($4)}' || echo "80"`)
+(defpoll cpu-temp-avg :interval "3s"    :initial "0"           `cat /sys/class/thermal/thermal_zone0/temp 2>/dev/null | awk '{printf "%d", $1/1000}' || echo 0`)
+(defpoll temp-core0   :interval "3s"    :initial "0"           `sensors 2>/dev/null | awk '/Core 0/{gsub(/[+°C]/,"",$3); printf "%d", $3; exit}' || echo 0`)
+(defpoll temp-core1   :interval "3s"    :initial "0"           `sensors 2>/dev/null | awk '/Core 1/{gsub(/[+°C]/,"",$3); printf "%d", $3; exit}' || echo 0`)
+(defpoll temp-core2   :interval "3s"    :initial "0"           `sensors 2>/dev/null | awk '/Core 2/{gsub(/[+°C]/,"",$3); printf "%d", $3; exit}' || echo 0`)
+(defpoll temp-core3   :interval "3s"    :initial "0"           `sensors 2>/dev/null | awk '/Core 3/{gsub(/[+°C]/,"",$3); printf "%d", $3; exit}' || echo 0`)
+(defpoll music-title  :interval "2s"    :initial "Not Playing" `playerctl metadata title 2>/dev/null || echo "Not Playing"`)
+(defpoll music-art    :interval "5s"    :initial ""            `$HOME/.config/eww/assets/get-art.sh`)
+(defpoll music-status :interval "2s"    :initial "stopped"     `playerctl status 2>/dev/null | tr '[:upper:]' '[:lower:]' || echo "stopped"`)
+(defpoll music-pos    :interval "2s"    :initial "0"           `playerctl position 2>/dev/null | awk '{printf "%d", $1}' || echo 0`)
+(defpoll music-len    :interval "5s"    :initial "1"           `playerctl metadata mpris:length 2>/dev/null | awk '{printf "%d", $1/1000000}' || echo 1`)
+(defpoll music-artist :interval "2s"    :initial "Unknown"     `playerctl metadata artist 2>/dev/null || echo "Unknown"`)
+
+;;; ─── RING CHART ───────────────────────────────────────────
+(defwidget ring-chart [value label icon color sub]
+  (box :class "ring-wrap" :orientation "v" :spacing 4 :space-evenly false
+    (overlay
+      (circular-progress
+        :class "ring-prog"
+        :style "color: ${color};"
+        :value value
+        :thickness 9
+        :start-at 75)
+      (box :orientation "v" :valign "center" :halign "center"
+           :style "min-width: 85px; min-height: 85px;"
+        (label :class "ring-icon"  :text icon  :style "color: ${color};")
+        (label :class "ring-value" :text "${value}%")))
+    (label :class "ring-label" :text label :halign "center")
+    (label :class "ring-sub"   :text sub   :halign "center")))
+
+;;; ─── CORE BOX ─────────────────────────────────────────────
+(defwidget core-box [core temp]
+  (box :class "core-box" :orientation "h" :spacing 6 :space-evenly false :hexpand true
+    (label :class "core-name" :text core)
+    (label :class "core-temp" :text "${temp} °C")))
+
+;;; ─── MAIN SIDEBAR ─────────────────────────────────────────
+(defwidget sidebar []
+  (box :class "sidebar-root" :orientation "v" :spacing 0 :space-evenly false
+
+    ;; ── PROFILE ──
+    (box :class "profile-box" :orientation "h" :spacing 12 :valign "center" :space-evenly false
+      (box :class "avatar-wrap"
+        (image :class "avatar"
+               :path "/home/${username}/.config/eww/assets/avatar.png"
+               :image-width  52
+               :image-height 52))
+      (box :orientation "v" :spacing 4 :space-evenly false :valign "center" :hexpand true
+        (label :class "username"    :text username :halign "start")
+        (label :class "uptime-text" :text "up ${uptime}" :halign "start"))
+      (box :orientation "v" :spacing 6 :space-evenly false :valign "center"
+        (button :class "power-btn shutdown" :onclick "systemctl poweroff" :tooltip "Shutdown"
+          (label :text "󰐥"))
+        (button :class "power-btn lock"     :onclick "hyprlock"           :tooltip "Lock"
+          (label :text "󰍁")))
+      (box :orientation "v" :spacing 6 :space-evenly false :valign "center"
+        (button :class "power-btn reboot"   :onclick "systemctl reboot"   :tooltip "Reboot"
+          (label :text "󰜉"))
+        (button :class "power-btn logout"   :onclick "hyprctl dispatch exit" :tooltip "Logout"
+          (label :text "󰍃"))))
+
+    (box :class "divider")
+
+    ;; ── BATTERY ──
+    (box :class "bat-box" :orientation "h" :spacing 10 :valign "center" :space-evenly false
+      (label :class "bat-icon-big" :text "󰁹")
+      (box :orientation "v" :spacing 2 :space-evenly false :hexpand true
+        (label :class "bat-main" :text "Battery ${bat-percent}%" :halign "start")
+        (label :class "bat-sub"  :text "${bat-time} · ${bat-status}" :halign "start"))
+      (circular-progress
+        :class "bat-mini-ring"
+        :value bat-percent
+        :thickness 5
+        :start-at 75))
+
+    (box :class "divider")
+
+    ;; ── SYSTEM RINGS ──
+    (box :class "rings-box" :orientation "h" :space-evenly true :homogeneous true
+      (ring-chart :value cpu-usage  :label "CPU"  :icon "󰻠" :color "#f38ba8" :sub "${cpu-used-ghz} GHz")
+      (ring-chart :value ram-usage  :label "RAM"  :icon "󰍛" :color "#89b4fa" :sub "${ram-used-gb}/${ram-total-gb}")
+      (ring-chart :value disk-usage :label "DISK" :icon "󰋊" :color "#a6e3a1" :sub "${disk-used}/${disk-total}"))
+
+    (box :class "divider")
+
+    ;; ── SLIDERS ──
+    (box :class "sliders-box" :orientation "v" :spacing 10 :space-evenly false
+      (box :orientation "h" :spacing 10 :valign "center"
+        (label :class "sl-icon vol"  :text "󰕾")
+        (scale  :class "slider vol-slider" :hexpand true
+                :min 0 :max 100 :value volume
+                :draw-value false
+                :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%")
+        (label :class "sl-val" :text "${volume}%"))
+      (box :orientation "h" :spacing 10 :valign "center"
+        (label :class "sl-icon br"   :text "󰃟")
+        (scale  :class "slider br-slider" :hexpand true
+                :min 1 :max 100 :value brightness
+                :draw-value false
+                :onchange "brightnessctl set {}%")
+        (label :class "sl-val" :text "${brightness}%")))
+
+    (box :class "divider")
+
+    ;; ── TEMPERATURE ──
+    (box :class "temp-box" :orientation "v" :spacing 8 :space-evenly false
+      (box :orientation "h" :spacing 8 :valign "center"
+        (label :class "temp-title" :text "Core Temperature" :halign "start" :hexpand true)
+        (label :class "temp-avg-big" :text "${cpu-temp-avg} °C"))
+      (box :orientation "h" :spacing 8 :space-evenly true :homogeneous true
+        (core-box :core "Core 0:" :temp temp-core0)
+        (core-box :core "Core 1:" :temp temp-core1))
+      (box :orientation "h" :spacing 8 :space-evenly true :homogeneous true
+        (core-box :core "Core 2:" :temp temp-core2)
+        (core-box :core "Core 3:" :temp temp-core3)))
+
+    (box :class "divider")
+
+    ;; ── MUSIC ──
+    (box :class "music-box" :orientation "v" :spacing 10 :space-evenly false
+      (box :orientation "h" :spacing 12 :valign "center" :space-evenly false
+        (image :class "album-art"
+               :path {music-art == "" ? "/home/${username}/.config/eww/assets/noart.png" : music-art}
+               :image-width  56
+               :image-height 56)
+        (box :orientation "v" :spacing 5 :space-evenly false :valign "center" :hexpand true
+          (label :class "music-title"  :text music-title  :limit-width 20 :halign "start")
+          (label :class "music-artist" :text music-artist :limit-width 22 :halign "start")))
+      (scale :class "music-progress"
+             :min 0 :max {music-len > 0 ? music-len : 1}
+             :value music-pos :draw-value false
+             :onchange "playerctl position {}")
+      (box :orientation "h"
+        (label :class "music-time" :text "${music-pos}s" :halign "start" :hexpand true)
+        (label :class "music-time" :text "${music-len}s" :halign "end"))
+      (box :class "music-controls" :orientation "h" :space-evenly true :halign "center"
+        (button :class "music-btn prev"      :onclick "playerctl previous"   (label :text "󰒮"))
+        (button :class "music-btn playpause" :onclick "playerctl play-pause"
+          (label :text {music-status == "playing" ? "󰏤" : "󰐊"}))
+        (button :class "music-btn next"      :onclick "playerctl next"       (label :text "󰒭"))))))
+
+;;; ─── WINDOW ───────────────────────────────────────────────
+(defwindow sidebar-window
+  :monitor 0
+  :geometry (geometry
+    :x "12px"
+    :y "12px"
+    :width "300px"
+    :anchor "top right")
+  :stacking "overlay"
+  :exclusive false
+  :focusable false
+  :namespace "eww-dashboard"
+  (sidebar))

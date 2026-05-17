@@ -9,7 +9,7 @@
 
     "modules-left": ["custom/distro", "hyprland/workspaces", "cpu", "memory"],
     "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "network", "battery", "tray", "custom/power"],
+    "modules-right": ["custom/eww-toggle", "pulseaudio", "network", "battery", "tray", "custom/power"],
 
     "custom/distro": {
         "format": "󰣇",
@@ -44,14 +44,13 @@
         "format-icons": { "default": ["󰕿", "󰖀", "󰕾"] },
         "on-click": "pavucontrol"
     },
-
     "network": {
-        "format-wifi": "󰤨  {signalStrength}%",
-        "format-ethernet": "󰈀",
-        "format-disconnected": "󰤭",
-        "tooltip-format": "{essid}"
+    "format-wifi": "󰤨  {signalStrength}%",
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󰤭",
+    "tooltip-format": "{essid}",
+    "on-click": "eww open --toggle network-manager" // <-- Tambahkan baris ini
     },
-
     "battery": {
         "states": { "warning": 30, "critical": 15 },
         "format": "{icon} {capacity}%",
@@ -65,8 +64,10 @@
     },
 
     "custom/power": {
-        "format": "󰐥",
-        "on-click": "wlogout",
-        "tooltip": false
-    }
+        "format": "󰮯",
+    	"tooltip": false,
+   	"on-click": "eww open --toggle sidebar-window",
+   	"on-click-right": "eww kill",
+   	"interval": "once"
+    },
 }

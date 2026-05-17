@@ -11,7 +11,7 @@
     "margin-right": 10,
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["clock"],
-    "modules-right": ["network", "pulseaudio", "cpu", "memory", "tray"],
+    "modules-right": ["network", "pulseaudio", "cpu", "memory", "tray","custom/power"],
 
     "hyprland/workspaces": {
         "disable-scroll": true,
@@ -47,7 +47,14 @@
             "default": ["", "", ""]
         },
         "on-click": "pavucontrol"
-    }
+    },
+    "custom/power": {
+        "format": "󰮯",
+    	"tooltip": false,
+   	"on-click": "eww open --toggle sidebar-window",
+   	"on-click-right": "eww kill",
+   	"interval": "once"
+    },
 }
 
 

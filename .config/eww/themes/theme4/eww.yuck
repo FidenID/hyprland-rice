@@ -1,0 +1,88 @@
+;; --- POLLS ---
+(defpoll username    :interval "9999s" `whoami`)
+(defpoll uptime      :interval "60s"   `uptime -p | sed 's/up //'`)
+(defpoll bat-percent :interval "10s"   `cat /sys/class/power_supply/BAT1/capacity 2>/dev/null || echo 0`)
+(defpoll bat-status  :interval "10s"   `cat /sys/class/power_supply/BAT1/status 2>/dev/null || echo "Unknown"`)
+
+(defpoll cpu-usage   :interval "2s"    `top -bn1 | grep "Cpu(s)" | awk '{print int($2)}'`)
+(defpoll ram-used    :interval "5s"    `free -h | awk '/Mem:/{print $3}' | sed 's/i//'`)
+(defpoll disk-used   :interval "60s"   `df -h / | awk 'NR==2{print $3}'`)
+
+(defpoll volume      :interval "1s"    `wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf "%d", $2*100}' || echo 0`)
+(defpoll brightness  :interval "1s"    `brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}'`)
+(defpoll temp        :interval "5s"    `sensors | grep 'Package id 0:' | awk '{print $4}' | sed 's/+//'`)
+
+(defpoll music-title  :interval "1s" `playerctl metadata title || echo "Not Playing"`)
+(defpoll music-artist :interval "1s" `playerctl metadata artist || echo "Unknown"`)
+(defpoll music-art    :interval "2s" `playerctl metadata mpris:artUrl || echo ""`)
+
+;; --- WIDGETS ---
+(defwidget sidebar []
+  (box :class "sidebar-root" :orientation "v" :space-evenly false :spacing 12
+    
+    ;; 1. PROFILE SECTION
+    (box :class "profile-box" :orientation "h" :space-evenly false :spacing 15
+      (box :class "avatar" :style "background-image: url('/home/miko/.config/eww/assets/avatar.png');")
+      (box :orientation "v" :valign "center" :hexpand true
+        (label :class "username" :text "Miko" :halign "start")
+        (label :class "uptime-text" :text "Uptime: ${uptime}" :halign "start"))
+      (button :class "power-mini" :onclick "systemctl poweroff" "󰐥"))
+
+    ;; 2. BATTERY BAR (Full Width)
+    (box :class "bat-container" :orientation "v" :spacing 5
+      (box :orientation "h"
+        (label :text {bat-status == "Charging" ? "󱐋 Battery" : "󰁹 Battery"} :class "sub-text")
+        (label :hexpand true)
+        (label :text "${bat-percent}%" :class "sub-text"))
+      (progress :value bat-percent :class "bat-bar"))
+
+    (box :class "divider")
+
+    ;; 3. STATS (CPU %, RAM GB, DISK GB)
+    (box :class "stats-row" :orientation "h" :space-evenly true
+      (box :orientation "v" :spacing 5
+        (label :text "󰻠 ${cpu-usage}%" :class "stat-val cpu-text")
+        (label :text "CPU" :class "stat-label"))
+      (box :orientation "v" :spacing 5
+        (label :text "󰍛 ${ram-used}" :class "stat-val ram-text")
+        (label :text "RAM" :class "stat-label"))
+      (box :orientation "v" :spacing 5
+        (label :text "󰋊 ${disk-used}" :class "stat-val disk-text")
+        (label :text "DISK" :class "stat-label")))
+
+    (box :class "divider")
+
+    ;; 4. CONTROLS (Brightness & Volume)
+    (box :class "controls-box" :orientation "v" :spacing 15
+      (box :orientation "h" :spacing 10
+        (label :text "󰕾" :class "ctrl-icon vol")
+        (scale :min 0 :max 101 :value volume :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%")
+        (label :text "${volume}%" :class "ctrl-perc"))
+      (box :orientation "h" :spacing 10
+        (label :text "󰃟" :class "ctrl-icon br")
+        (scale :min 0 :max 101 :value brightness :onchange "brightnessctl set {}%")
+        (label :text "${brightness}%" :class "ctrl-perc")))
+
+    ;; 5. TEMPERATURE (Simple info)
+    (box :class "temp-info" :orientation "h" :halign "center"
+      (label :text "󰏈 Core Temp: ${temp}" :class "temp-text"))
+
+    (box :class "divider")
+
+    ;; 6. MUSIC PLAYER (Bottom)
+    (box :class "music-footer" :orientation "h" :spacing 12 :space-evenly false
+      (box :class "music-art" :style "background-image: url('${music-art}');")
+      (box :orientation "v" :valign "center" :hexpand true
+        (label :class "music-title" :text music-title :limit-width 15 :halign "start")
+        (label :class "music-artist" :text music-artist :limit-width 18 :halign "start"))
+      (box :orientation "h" :valign "center" :spacing 8
+        (button :onclick "playerctl previous" "󰒮")
+        (button :class "play-btn" :onclick "playerctl play-pause" "󰐊")
+        (button :onclick "playerctl next" "󰒭")))
+  ))
+
+(defwindow sidebar-window
+  :monitor 0
+  :geometry (geometry :x "15px" :y "15px" :width "330px" :anchor "top right")
+  :stacking "overlay"
+  (sidebar))

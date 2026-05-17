@@ -1,0 +1,42 @@
+/* STYLE 2 — Black transparent + white circles, minimal */
+* { font-family: "JetBrainsMono Nerd Font", monospace; font-size: 13px; color: #ffffff; }
+.sidebar-root { background-color: rgba(0,0,0,0.68); border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 16px 14px; }
+.divider { background-color: rgba(255,255,255,0.08); min-height: 1px; margin: 10px 0px; }
+.avatar-wrap { border-radius: 999px; border: 2px solid rgba(255,255,255,0.60); padding: 2px; }
+.avatar { border-radius: 999px; min-width: 52px; min-height: 52px; }
+.username { font-size: 17px; font-weight: bold; color: #ffffff; }
+.uptime-text { font-size: 11px; color: rgba(255,255,255,0.45); }
+.power-btn { border-radius: 999px; border: 1px solid rgba(255,255,255,0.18); background-color: rgba(255,255,255,0.08); min-width: 30px; min-height: 26px; padding: 0px; }
+.power-btn label { font-size: 15px; color: rgba(255,255,255,0.75); }
+.power-btn:hover { background-color: rgba(255,255,255,0.18); }
+.power-btn.shutdown label { color: #ff6b81; } .power-btn.reboot label { color: #ffd32a; }
+.power-btn.lock label { color: #7efff5; } .power-btn.logout label { color: #d4a5f5; }
+.power-btn.shutdown:hover { border-color: #ff6b81; } .power-btn.reboot:hover { border-color: #ffd32a; }
+.power-btn.lock:hover { border-color: #7efff5; } .power-btn.logout:hover { border-color: #d4a5f5; }
+.bat-icon-big { font-size: 30px; color: #7efff5; min-width: 36px; }
+.bat-main { font-size: 14px; font-weight: bold; color: #ffffff; }
+.bat-sub { font-size: 11px; color: rgba(255,255,255,0.45); }
+.bat-mini-ring { min-width: 42px; min-height: 42px; color: #7efff5; }
+.ring-wrap { min-width: 88px; } .ring-prog { min-width: 85px; min-height: 85px; color: rgba(255,255,255,0.20); }
+.ring-icon { font-size: 16px; color: rgba(255,255,255,0.60); } .ring-value { font-size: 13px; font-weight: bold; color: #ffffff; }
+.ring-label { font-size: 10px; font-weight: bold; color: rgba(255,255,255,0.45); } .ring-sub { font-size: 9px; color: rgba(255,255,255,0.30); }
+.sl-icon { font-size: 18px; min-width: 24px; } .sl-icon.vol { color: #7efff5; } .sl-icon.br { color: #ffd32a; }
+.sl-val { font-size: 11px; color: rgba(255,255,255,0.45); min-width: 38px; }
+.slider trough { min-height: 7px; border-radius: 999px; background-color: rgba(255,255,255,0.12); }
+.slider trough highlight { min-height: 7px; border-radius: 999px; }
+.vol-slider trough highlight { background-color: rgba(126,255,245,0.80); }
+.br-slider trough highlight { background-color: rgba(255,211,42,0.80); }
+.slider trough slider { min-width: 16px; min-height: 16px; border-radius: 999px; background-color: #ffffff; border: none; margin: -5px 0; }
+.temp-title { font-size: 12px; font-weight: bold; color: rgba(255,255,255,0.45); } .temp-avg-big { font-size: 22px; font-weight: bold; color: #ff6b81; }
+.core-box { padding: 4px 0px; } .core-name { font-size: 11px; color: rgba(255,255,255,0.40); min-width: 56px; } .core-temp { font-size: 13px; font-weight: bold; color: #ffd32a; }
+.album-art { border-radius: 12px; border: 1px solid rgba(255,255,255,0.18); min-width: 56px; min-height: 56px; }
+.music-title { font-size: 14px; font-weight: bold; color: #ffffff; } .music-artist { font-size: 11px; color: rgba(255,255,255,0.45); } .music-time { font-size: 10px; color: rgba(255,255,255,0.25); }
+.music-progress trough { min-height: 4px; border-radius: 999px; background-color: rgba(255,255,255,0.12); }
+.music-progress trough highlight { min-height: 4px; border-radius: 999px; background-color: rgba(255,255,255,0.70); }
+.music-progress trough slider { min-width: 10px; min-height: 10px; border-radius: 999px; background-color: #ffffff; border: none; margin: -3px 0; }
+.music-controls { margin-top: 6px; }
+.music-btn { background-color: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); border-radius: 999px; min-width: 36px; min-height: 36px; }
+.music-btn label { font-size: 16px; color: rgba(255,255,255,0.55); } .music-btn:hover { background-color: rgba(255,255,255,0.18); } .music-btn:hover label { color: #ffffff; }
+.music-btn.prev label { color: #7efff5; } .music-btn.next label { color: #7efff5; }
+.music-btn.playpause { background-color: rgba(255,255,255,0.90); border: none; min-width: 44px; min-height: 44px; }
+.music-btn.playpause label { color: #000000; font-size: 20px; } .music-btn.playpause:hover { background-color: #ffffff; }
