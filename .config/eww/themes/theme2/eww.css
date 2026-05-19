@@ -1,0 +1,92 @@
+/* THEME 2 - Catppuccin Mocha Pills */
+* {
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font", sans-serif;
+  font-size: 12px; font-weight: bold;
+}
+
+.sidebar { background-color: transparent; padding: 8px; color: #cdd6f4; }
+
+.card {
+  background-color: rgba(26, 28, 43, 0.85);
+  border-radius: 14px;
+  padding: 12px;
+  color: #cdd6f4;
+}
+.card.hero {
+  background-color: rgba(26, 28, 43, 0.92);
+  border: 1px solid rgba(0,191,255,0.18);
+}
+
+.divider {
+  background-color: rgba(255,255,255,0.06);
+  min-height: 1px; margin: 4px 0;
+}
+
+.avatar {
+  min-width: 52px; min-height: 52px; border-radius: 12px;
+  background-size: cover; background-position: center;
+  background-color: #1a1c2b; border: 2px solid #00bfff;
+}
+.name { font-size: 15px; color: #cdd6f4; }
+.sub  { color: #a5adcb; font-size: 11px; }
+
+.section { font-size: 10px; color: #c6a0f6; letter-spacing: 1.5px; }
+.title   { color: #cdd6f4; font-size: 12px; }
+.value   { color: #a5adcb; font-size: 12px; }
+
+.icon-md { font-size: 15px; color: #91d7e3; min-width: 22px; }
+
+/* Pills */
+.pill {
+  background-color: #1a1c2b;
+  border-radius: 10px;
+  padding: 6px 12px;
+}
+.pill .picon { font-size: 14px; padding-right: 4px; }
+.pill .pval  { font-size: 12px; color: #cdd6f4; }
+
+.pill.clock { background-color: #2a2d45; color: #eed49f; padding: 8px 14px; }
+.pill.date  { background-color: #2a2d45; color: #91d7e3; padding: 8px 14px; }
+
+.pill.cpu  .picon { color: #eed49f; }
+.pill.ram  .picon { color: #a6da95; }
+.pill.disk .picon { color: #68b0d6; }
+.pill.temp .picon { color: #f5a97f; }
+.pill.bat  .picon { color: #a6da95; }
+.pill.pkg  .picon { color: #c6a0f6; }
+
+/* Bars */
+scale.bar { min-height: 6px; margin: 2px 0; }
+scale.bar trough { min-height: 5px; background-color: #2a2d45; border-radius: 999px; }
+scale.bar highlight, scale.bar progress {
+  min-height: 5px; border-radius: 999px; background-color: #91d7e3;
+}
+scale.bar slider { background-color: transparent; min-width: 0; min-height: 0; }
+
+scale.bar.vol  highlight { background-color: #f5a97f; }
+scale.bar.bri  highlight { background-color: #eed49f; }
+scale.bar.pbar highlight { background-color: #f5c2e7; }
+
+/* Player */
+.art {
+  min-width: 56px; min-height: 56px; border-radius: 10px;
+  background-size: cover; background-position: center;
+  background-color: #1a1c2b;
+}
+.ptitle  { font-size: 13px; color: #cdd6f4; }
+.partist { font-size: 11px; color: #f5c2e7; }
+.palbum  { font-size: 10px; color: #6c7086; font-style: italic; }
+
+.controls { margin-top: 4px; }
+.pbtn {
+  font-size: 15px; color: #a5adcb;
+  padding: 4px 12px; border-radius: 999px;
+  background-color: #2a2d45;
+}
+.pbtn:hover { background-color: #45475a; color: #cdd6f4; }
+.pbtn.play {
+  font-size: 18px; color: #1a1c2b; background-color: #00bfff;
+  padding: 4px 16px;
+}
+.pbtn.play:hover { background-color: #91d7e3; }

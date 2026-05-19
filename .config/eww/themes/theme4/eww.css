@@ -1,49 +1,90 @@
-* { all: unset; font-family: "JetBrainsMono Nerd Font", sans-serif; }
-
-.sidebar-root { 
-    background-color: #1e1e2e; 
-    border: 1px solid #313244; 
-    border-radius: 20px; 
-    padding: 20px; 
+/* THEME 4 - Capsule Rows */
+* {
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font", sans-serif;
+  font-size: 12px;
 }
 
-/* Profile */
-.avatar { 
-    min-width: 50px; min-height: 50px; 
-    border-radius: 10px; background-size: cover; 
+.sidebar { background-color: transparent; padding: 8px; color: #c0caf5; }
+
+/* Every visible chunk is a pill */
+.cap {
+  background-color: #1a1b26;
+  border: 1px solid #414868;
+  border-radius: 15px;
+  padding: 8px 14px;
+  color: #c0caf5;
 }
-.username { font-size: 18px; font-weight: bold; color: #cdd6f4; }
-.uptime-text { font-size: 11px; color: #a6adc8; }
-.power-mini { color: #f38ba8; font-size: 18px; padding: 5px; }
 
-/* Battery */
-.sub-text { font-size: 11px; color: #bac2de; font-weight: bold; }
-progress trough { background-color: #313244; border-radius: 10px; min-height: 8px; }
-progress highlight { background-color: #a6e3a1; border-radius: 10px; }
+.cap.hero { padding: 10px 14px; }
+.avatar {
+  min-width: 44px; min-height: 44px; border-radius: 50%;
+  background-size: cover; background-position: center;
+  background-color: #24283b; border: 2px solid #7aa2f7;
+}
+.name { font-size: 14px; color: #c0caf5; font-weight: bold; }
+.sub  { color: #565f89; font-size: 11px; }
 
-/* Stats Row */
-.stat-val { font-size: 14px; font-weight: bold; }
-.stat-label { font-size: 10px; color: #6c7086; }
-.cpu-text { color: #f38ba8; }
-.ram-text { color: #89b4fa; }
-.disk-text { color: #fab387; }
+.cap.clock { color: #bb9af7; padding: 6px 14px; font-size: 14px; font-weight: bold; }
+.cap.date  { color: #7aa2f7; padding: 6px 14px; font-size: 12px; }
 
-/* Sliders */
-scale trough { background-color: #313244; border-radius: 10px; min-height: 10px; }
-scale highlight { border-radius: 10px; }
-.vol scale highlight { background-color: #89b4fa; }
-.br scale highlight { background-color: #f9e2af; }
-.ctrl-icon { font-size: 16px; min-width: 20px; }
-.ctrl-perc { font-size: 11px; color: #cdd6f4; min-width: 30px; }
+.cap.weather { padding: 8px 14px; }
+.wicon { font-size: 15px; color: #e0af68; padding-right: 4px; }
+.wtext { color: #c0caf5; font-size: 12px; }
 
-/* Temp */
-.temp-text { font-size: 12px; color: #f38ba8; font-weight: bold; background: #313244; padding: 5px 15px; border-radius: 10px; }
+/* Row capsule */
+.cap.row {
+  padding: 6px 12px;
+}
+.ricon { font-size: 14px; min-width: 20px; }
+.ricon.cpu  { color: #bb9af7; }
+.ricon.ram  { color: #9ece6a; }
+.ricon.disk { color: #b4f9f8; }
+.ricon.bat  { color: #9ece6a; }
+.ricon.vol  { color: #7aa2f7; }
+.ricon.bri  { color: #e0af68; }
+.ricon.net  { color: #f7768e; }
 
-/* Music Footer */
-.music-footer { background-color: #313244; padding: 10px; border-radius: 15px; }
-.music-art { min-width: 45px; min-height: 45px; border-radius: 8px; background-size: cover; background-color: #1e1e2e; }
-.music-title { font-size: 12px; font-weight: bold; color: #cdd6f4; }
-.music-artist { font-size: 10px; color: #a6adc8; }
-.music-footer button { font-size: 16px; color: #89b4fa; }
+.rlabel { color: #565f89; font-size: 10px; font-weight: bold; min-width: 30px; }
+.rval   { color: #c0caf5; font-size: 12px; }
 
-.divider { background-color: #313244; min-height: 2px; margin: 10px 0; }
+/* Bars */
+scale.bar { min-height: 5px; margin: 2px 4px; }
+scale.bar trough { min-height: 4px; background-color: #24283b; border-radius: 999px; }
+scale.bar highlight, scale.bar progress {
+  min-height: 4px; border-radius: 999px; background-color: #7aa2f7;
+}
+scale.bar slider { background-color: transparent; min-width: 0; min-height: 0; }
+
+scale.bar.cpu  highlight { background-color: #bb9af7; }
+scale.bar.ram  highlight { background-color: #9ece6a; }
+scale.bar.disk highlight { background-color: #b4f9f8; }
+scale.bar.bat  highlight { background-color: #9ece6a; }
+scale.bar.vol  highlight { background-color: #7aa2f7; }
+scale.bar.bri  highlight { background-color: #e0af68; }
+scale.bar.pbar highlight { background-color: #f7768e; }
+
+/* Player */
+.cap.player { padding: 10px 12px; }
+.art {
+  min-width: 54px; min-height: 54px; border-radius: 12px;
+  background-size: cover; background-position: center;
+  background-color: #24283b; border: 1px solid #414868;
+}
+.ptitle  { font-size: 13px; color: #c0caf5; font-weight: bold; }
+.partist { font-size: 11px; color: #f7768e; }
+.palbum  { font-size: 10px; color: #565f89; font-style: italic; }
+
+.pcontrols { margin-top: 4px; }
+.pbtn {
+  font-size: 14px; color: #c0caf5;
+  padding: 4px 14px; border-radius: 15px;
+  background-color: #24283b;
+  border: 1px solid #414868;
+}
+.pbtn:hover { background-color: #414868; }
+.pbtn.play {
+  font-size: 17px; color: #1a1b26;
+  background-color: #7aa2f7; border-color: #7aa2f7;
+}
+.pbtn.play:hover { background-color: #bb9af7; }

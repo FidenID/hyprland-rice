@@ -1,0 +1,94 @@
+;; ============================================================
+;; THEME 5 - Nordic Blocks (matches waybar5)
+;; ============================================================
+
+(include "polls.yuck")
+
+(defvar dnd false)
+
+(defwidget head []
+  (box :class "card" :orientation "v" :space-evenly false :spacing 8
+    (box :orientation "h" :space-evenly false :spacing 12
+      (box :class "avatar"
+           :style "background-image: url('${EWW_CONFIG_DIR}/assets/avatar.png');")
+      (box :orientation "v" :space-evenly false :valign "center" :hexpand true
+        (label :class "name" :halign "start" :text username)
+        (label :class "sub"  :halign "start" :text distro)
+        (label :class "sub"  :halign "start" :text "  ${uptime}")))
+    (box :class "divider")
+    (box :orientation "h"
+      (label :class "clock" :halign "start" :hexpand true :text time_s)
+      (label :class "date"  :halign "end"   :text date_short))))
+
+(defwidget brightness-card []
+  (box :class "card" :orientation "v" :space-evenly false :spacing 6
+    (label :class "section" :halign "start" :text "BRIGHTNESS")
+    (box :orientation "h" :space-evenly false :spacing 10
+      (label :class "ibig" :text "")
+      (scale :class "bar bri big" :hexpand true :value brightness :min 0 :max 100
+             :onchange "brightnessctl set {}%")
+      (label :class "value-lg" :text "${brightness}%"))))
+
+(defwidget row [icon name value bcls]
+  (box :orientation "v" :space-evenly false :spacing 2
+    (box :orientation "h" :space-evenly false
+      (label :class "icon-md" :text icon)
+      (label :class "title" :halign "start" :hexpand true :text "  ${name}")
+      (label :class "value" :halign "end" :text "${value}%"))
+    (scale :class "bar ${bcls}" :value value :min 0 :max 100 :active false)))
+
+(defwidget stats []
+  (box :class "card" :orientation "v" :space-evenly false :spacing 8
+    (label :class "section" :halign "start" :text "RESOURCES")
+    (row :icon "" :name "CPU"  :value cpu_usage  :bcls "cpu")
+    (row :icon "" :name "RAM"  :value ram_usage  :bcls "ram")
+    (row :icon "" :name "Disk" :value disk_usage :bcls "disk")
+    (row :icon "" :name "Bat"  :value battery   :bcls "bat")))
+
+(defwidget quick []
+  (box :class "card" :orientation "v" :space-evenly false :spacing 8
+    (label :class "section" :halign "start" :text "QUICK")
+    (box :orientation "h" :space-evenly true :spacing 6
+      (button :class {dnd ? "qbtn on" : "qbtn"}
+              :onclick "${EWW_CMD} update dnd=${dnd ? "false" : "true"} && (${dnd ? "makoctl mode -s default" : "makoctl mode -s do-not-disturb"} 2>/dev/null)"
+              "")
+      (button :class {vol_muted == "true" ? "qbtn on" : "qbtn"}
+              :onclick "pamixer -t" "")
+      (button :class "qbtn" :onclick "nm-connection-editor" "")
+      (button :class "qbtn" :onclick "playerctl play-pause" ""))
+    (box :class "divider")
+    (box :orientation "h" :space-evenly false :spacing 10
+      (label :class "icon-md" :text "")
+      (label :class "title" :halign "start" :hexpand true :text net_ssid))))
+
+(defwidget player []
+  (box :class "card" :orientation "v" :space-evenly false :spacing 6
+    (box :orientation "h" :space-evenly false :spacing 10
+      (box :class "art" :style "background-image: url('${player_art}');")
+      (box :orientation "v" :space-evenly false :valign "center" :hexpand true
+        (label :class "ptitle"  :halign "start" :limit-width 22 :text player_title)
+        (label :class "partist" :halign "start" :limit-width 24 :text player_artist)
+        (label :class "palbum"  :halign "start" :limit-width 24 :text player_album)))
+    (scale :class "bar pbar" :value player_pos :min 0 :max {player_len > 0 ? player_len : 1}
+           :onchange "playerctl position {}" :active true)
+    (box :orientation "h" :space-evenly true :class "pcontrols"
+      (button :class "pbtn" :onclick "playerctl previous"  "⏮")
+      (button :class "pbtn play" :onclick "playerctl play-pause"
+              {player_status == "Playing" ? "⏸" : "▶"})
+      (button :class "pbtn" :onclick "playerctl next" "⏭"))))
+
+(defwidget sidebar []
+  (box :class "sidebar" :orientation "v" :space-evenly false :spacing 6
+    (head) (brightness-card) (stats) (quick) (player)))
+
+(defwindow dashboard
+  :monitor 0
+  :geometry (geometry :x "12px" :y "4px" :width "330px" :height "92%"
+                      :anchor "right top")
+  :stacking "fg" :exclusive false :focusable false (sidebar))
+
+(defwindow sidebar-window
+  :monitor 0
+  :geometry (geometry :x "12px" :y "4px" :width "330px" :height "92%"
+                      :anchor "right top")
+  :stacking "fg" :exclusive false :focusable false (sidebar))

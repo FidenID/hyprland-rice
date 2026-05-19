@@ -1,0 +1,87 @@
+;; ============================================================
+;; THEME 2 - Catppuccin Mocha Pills (matches waybar2)
+;; Sidebar with rounded pill segments, focus on disk/temp/pacman
+;; ============================================================
+
+(include "polls.yuck")
+
+(defwidget topbar []
+  (box :class "card hero" :orientation "v" :space-evenly false :spacing 8
+    (box :orientation "h" :space-evenly false :spacing 12
+      (box :class "avatar"
+           :style "background-image: url('${EWW_CONFIG_DIR}/assets/avatar.png');")
+      (box :orientation "v" :space-evenly false :valign "center" :hexpand true
+        (label :class "name"  :halign "start" :text "${username}")
+        (label :class "sub"   :halign "start" :text distro)
+        (label :class "sub"   :halign "start" :text "  ${uptime}")))
+    (box :orientation "h" :space-evenly true :spacing 6
+      (label :class "pill clock" :text "  ${time}")
+      (label :class "pill date"  :text "  ${date_short}"))))
+
+(defwidget pill [icon value cls]
+  (box :class "pill ${cls}" :orientation "h" :space-evenly false :spacing 6
+    (label :class "picon" :text icon)
+    (label :class "pval"  :text value)))
+
+(defwidget stats-grid []
+  (box :class "card" :orientation "v" :space-evenly false :spacing 8
+    (label :class "section" :halign "start" :text "STATS")
+    (box :orientation "h" :space-evenly true :spacing 6
+      (pill :icon "" :value "${cpu_usage}%"   :cls "cpu")
+      (pill :icon "" :value "${ram_usage}%"   :cls "ram"))
+    (box :orientation "h" :space-evenly true :spacing 6
+      (pill :icon "" :value "${disk_usage}%" :cls "disk")
+      (pill :icon "" :value "${cpu_temp}°"   :cls "temp"))
+    (box :orientation "h" :space-evenly true :spacing 6
+      (pill :icon "" :value "${battery}%"    :cls "bat")
+      (pill :icon "" :value "${pkg_updates}" :cls "pkg"))))
+
+(defwidget controls []
+  (box :class "card" :orientation "v" :space-evenly false :spacing 8
+    (label :class "section" :halign "start" :text "CONTROLS")
+    (box :orientation "h" :space-evenly false :spacing 8
+      (label :class "icon-md" :text {vol_muted == "true" ? "" : ""})
+      (scale :class "bar vol" :hexpand true :value volume :min 0 :max 100
+             :onchange "pamixer --set-volume {}")
+      (label :class "value" :text "${volume}%"))
+    (box :orientation "h" :space-evenly false :spacing 8
+      (label :class "icon-md" :text "")
+      (scale :class "bar bri" :hexpand true :value brightness :min 0 :max 100
+             :onchange "brightnessctl set {}%")
+      (label :class "value" :text "${brightness}%"))
+    (box :class "divider")
+    (box :orientation "h" :space-evenly false :spacing 8
+      (label :class "icon-md" :text "󰒢")
+      (label :class "title" :halign "start" :hexpand true :text net_ssid))))
+
+(defwidget player []
+  (box :class "card player" :orientation "v" :space-evenly false :spacing 8
+    (box :orientation "h" :space-evenly false :spacing 10
+      (box :class "art" :style "background-image: url('${player_art}');")
+      (box :orientation "v" :space-evenly false :valign "center" :hexpand true
+        (label :class "ptitle"  :halign "start" :limit-width 22 :text player_title)
+        (label :class "partist" :halign "start" :limit-width 24 :text player_artist)
+        (label :class "palbum"  :halign "start" :limit-width 24 :text player_album)))
+    (scale :class "bar pbar" :value player_pos :min 0 :max {player_len > 0 ? player_len : 1}
+           :onchange "playerctl position {}" :active true)
+    (box :orientation "h" :space-evenly true :class "controls"
+      (button :class "pbtn" :onclick "playerctl previous"  "⏮")
+      (button :class "pbtn play" :onclick "playerctl play-pause"
+              {player_status == "Playing" ? "⏸" : "▶"})
+      (button :class "pbtn" :onclick "playerctl next" "⏭"))))
+
+(defwidget sidebar []
+  (box :class "sidebar" :orientation "v" :space-evenly false :spacing 6
+    (topbar) (stats-grid) (controls) (player)))
+
+(defwindow dashboard
+  :monitor 0
+  :geometry (geometry :x "12px" :y "4px" :width "320px" :height "92%"
+                      :anchor "right top")
+  :stacking "fg" :exclusive false :focusable false (sidebar))
+
+(defwindow sidebar-window
+  :monitor 0
+  :geometry (geometry :x "12px" :y "4px" :width "320px" :height "92%"
+                      :anchor "right top")
+  :stacking "fg" :exclusive false :focusable false (sidebar))

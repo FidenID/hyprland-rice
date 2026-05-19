@@ -1,43 +1,80 @@
-/* STYLE 1 — Dark Black + Blue/Purple accent (Catppuccin-ish) */
-* { font-family: "JetBrainsMono Nerd Font", monospace; font-size: 13px; color: #cdd6f4; }
-.sidebar-root { background-color: rgba(10,10,20,0.72); border: 1px solid rgba(122,162,247,0.25); border-radius: 20px; padding: 16px 14px; }
-.divider { background-color: rgba(122,162,247,0.10); min-height: 1px; margin: 10px 0px; }
-.avatar-wrap { border-radius: 999px; border: 2px solid #7aa2f7; padding: 2px; }
-.avatar { border-radius: 999px; min-width: 52px; min-height: 52px; }
-.username { font-size: 17px; font-weight: bold; color: #7aa2f7; }
-.uptime-text { font-size: 11px; color: #565f89; }
-.power-btn { border-radius: 8px; border: 1px solid rgba(122,162,247,0.15); background-color: rgba(20,20,40,0.60); min-width: 30px; min-height: 26px; padding: 0px; }
-.power-btn label { font-size: 15px; }
-.power-btn:hover { background-color: rgba(122,162,247,0.15); }
-.power-btn.shutdown label { color: #f7768e; } .power-btn.reboot label { color: #e0af68; }
-.power-btn.lock label { color: #7aa2f7; } .power-btn.logout label { color: #cba6f7; }
-.power-btn.shutdown:hover { border-color: #f7768e; background-color: rgba(247,118,142,0.15); }
-.power-btn.reboot:hover   { border-color: #e0af68; background-color: rgba(224,175,104,0.15); }
-.power-btn.lock:hover     { border-color: #7aa2f7; background-color: rgba(122,162,247,0.15); }
-.power-btn.logout:hover   { border-color: #cba6f7; background-color: rgba(203,166,247,0.15); }
-.bat-icon-big { font-size: 30px; color: #9ece6a; min-width: 36px; }
-.bat-main { font-size: 14px; font-weight: bold; color: #cdd6f4; }
-.bat-sub { font-size: 11px; color: #565f89; }
-.bat-mini-ring { min-width: 42px; min-height: 42px; color: #9ece6a; }
-.ring-wrap { min-width: 88px; } .ring-prog { min-width: 85px; min-height: 85px; }
-.ring-icon { font-size: 16px; } .ring-value { font-size: 13px; font-weight: bold; color: #cdd6f4; }
-.ring-label { font-size: 10px; font-weight: bold; color: #565f89; } .ring-sub { font-size: 9px; color: #3b3d57; }
-.sl-icon { font-size: 18px; min-width: 24px; } .sl-icon.vol { color: #7aa2f7; } .sl-icon.br { color: #e0af68; }
-.sl-val { font-size: 11px; color: #565f89; min-width: 38px; }
-.slider trough { min-height: 7px; border-radius: 999px; background-color: rgba(20,20,40,0.80); }
-.slider trough highlight { min-height: 7px; border-radius: 999px; }
-.vol-slider trough highlight { background-color: #7aa2f7; } .br-slider trough highlight { background-color: #e0af68; }
-.slider trough slider { min-width: 16px; min-height: 16px; border-radius: 999px; background-color: #cdd6f4; border: none; margin: -5px 0; }
-.temp-title { font-size: 12px; font-weight: bold; color: #565f89; } .temp-avg-big { font-size: 22px; font-weight: bold; color: #f7768e; }
-.core-box { padding: 4px 0px; } .core-name { font-size: 11px; color: #565f89; min-width: 56px; } .core-temp { font-size: 13px; font-weight: bold; color: #e0af68; }
-.album-art { border-radius: 12px; border: 2px solid rgba(122,162,247,0.20); min-width: 56px; min-height: 56px; }
-.music-title { font-size: 14px; font-weight: bold; color: #cdd6f4; } .music-artist { font-size: 11px; color: #565f89; } .music-time { font-size: 10px; color: #3b3d57; }
-.music-progress trough { min-height: 4px; border-radius: 999px; background-color: rgba(20,20,40,0.80); }
-.music-progress trough highlight { min-height: 4px; border-radius: 999px; background-color: #7aa2f7; }
-.music-progress trough slider { min-width: 10px; min-height: 10px; border-radius: 999px; background-color: #7aa2f7; border: none; margin: -3px 0; }
-.music-controls { margin-top: 6px; }
-.music-btn { background-color: transparent; border: 1px solid rgba(122,162,247,0.20); border-radius: 999px; min-width: 36px; min-height: 36px; }
-.music-btn label { font-size: 16px; color: #565f89; } .music-btn:hover { background-color: rgba(122,162,247,0.10); } .music-btn:hover label { color: #cdd6f4; }
-.music-btn.prev label { color: #7aa2f7; } .music-btn.next label { color: #7aa2f7; }
-.music-btn.playpause { background-color: #7aa2f7; border: none; min-width: 44px; min-height: 44px; }
-.music-btn.playpause label { color: #0a0a14; font-size: 20px; } .music-btn.playpause:hover { background-color: #89b4fa; }
+/* Sidebar palette tuned for waybar style1 (solid Tokyo Night) */
+* {
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font", sans-serif;
+  font-size: 13px;
+}
+
+.sidebar { background-color: transparent; padding: 6px; color: #c0caf5; }
+
+.card {
+  background-color: rgba(26, 27, 38, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 10px;
+  padding: 8px 10px;
+  color: #c0caf5;
+}
+
+.divider {
+  background-color: rgba(122,162,247,0.12);
+  min-height: 1px; margin: 4px 0;
+}
+
+.avatar {
+  min-width: 44px; min-height: 44px; border-radius: 10px;
+  background-size: cover; background-position: center;
+  background-color: #1a1b26; border: 2px solid #7aa2f7;
+}
+.name { font-size: 14px; color: #c0caf5; font-weight: bold; }
+.sub  { color: #565f89; font-size: 11px; }
+
+.clock { font-size: 17px; color: #7aa2f7; font-weight: bold; }
+.date  { color: #9aa5ce; font-size: 12px; }
+.win   { color: #9ece6a; font-size: 11px; font-weight: bold; }
+
+.section { font-size: 10px; color: #bb9af7; letter-spacing: 1.5px; }
+.title   { color: #c0caf5; font-size: 12px; font-weight: bold; }
+.value   { color: #9aa5ce; font-size: 12px; }
+.sub     { color: #565f89; font-size: 10px; }
+
+.icon-lg { font-size: 22px; color: #7aa2f7; padding: 0 4px; }
+.icon-md { font-size: 15px; color: #7aa2f7; min-width: 22px; }
+
+/* Bars */
+scale.bar { min-height: 6px; margin: 2px 0; }
+scale.bar trough { min-height: 5px; background-color: #292e42; border-radius: 999px; }
+scale.bar highlight, scale.bar progress {
+  min-height: 5px; border-radius: 999px; background-color: #7aa2f7;
+}
+scale.bar slider { background-color: transparent; min-width: 0; min-height: 0; }
+
+scale.bar.bat  highlight { background-color: #9ece6a; }
+scale.bar.cpu  highlight { background-color: #bb9af7; }
+scale.bar.ram  highlight { background-color: #9ece6a; }
+scale.bar.disk highlight { background-color: #e0af68; }
+scale.bar.vol  highlight { background-color: #0db9d7; }
+scale.bar.bri  highlight { background-color: #e0af68; }
+scale.bar.pbar highlight { background-color: #f7768e; }
+
+/* Player */
+.art {
+  min-width: 48px; min-height: 48px; border-radius: 8px;
+  background-size: cover; background-position: center;
+  background-color: #292e42; border: 1px solid rgba(122,162,247,0.15);
+}
+.ptitle  { font-size: 13px; color: #c0caf5; font-weight: bold; }
+.partist { font-size: 11px; color: #f7768e; }
+.palbum  { font-size: 10px; color: #565f89; font-style: italic; }
+
+.pcontrols { margin-top: 4px; }
+.pbtn {
+  font-size: 15px; color: #9aa5ce;
+  padding: 4px 14px; border-radius: 999px;
+  background-color: rgba(255,255,255,0.04);
+}
+.pbtn:hover { background-color: #292e42; color: #c0caf5; }
+.pbtn.play {
+  font-size: 18px; color: #1a1b26;
+  background-color: #7aa2f7; padding: 4px 18px;
+}
+.pbtn.play:hover { background-color: #bb9af7; }

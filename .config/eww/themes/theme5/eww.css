@@ -1,0 +1,95 @@
+/* THEME 5 - Nordic Blocks */
+* {
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font", sans-serif;
+  font-size: 13px;
+}
+
+.sidebar { background-color: transparent; padding: 8px; color: #eceff4; }
+
+.card {
+  background-color: rgba(67, 76, 94, 0.92);
+  border: 1px solid rgba(143, 188, 187, 0.18);
+  border-radius: 8px;
+  padding: 12px;
+  color: #eceff4;
+}
+
+.divider {
+  background-color: rgba(255,255,255,0.10);
+  min-height: 1px; margin: 4px 0;
+}
+
+.avatar {
+  min-width: 50px; min-height: 50px; border-radius: 8px;
+  background-size: cover; background-position: center;
+  background-color: #3b4252; border: 2px solid #88c0d0;
+}
+.name { font-size: 14px; color: #eceff4; font-weight: bold; }
+.sub  { color: #d8dee9; font-size: 11px; }
+
+.clock { font-size: 18px; color: #88c0d0; font-weight: bold; }
+.date  { color: #d8dee9; font-size: 12px; }
+
+.section { font-size: 10px; color: #8fbcbb; letter-spacing: 2px; font-weight: bold; }
+.title   { color: #eceff4; font-size: 12px; }
+.value   { color: #d8dee9; font-size: 12px; }
+
+.icon-md { font-size: 15px; color: #88c0d0; min-width: 22px; }
+.ibig    { font-size: 24px; color: #ebcb8b; padding: 0 6px; }
+
+.value-lg { color: #eceff4; font-size: 16px; font-weight: bold; }
+
+/* Bars */
+scale.bar { min-height: 6px; margin: 2px 0; }
+scale.bar trough { min-height: 5px; background-color: #2e3440; border-radius: 4px; }
+scale.bar highlight, scale.bar progress {
+  min-height: 5px; border-radius: 4px; background-color: #88c0d0;
+}
+scale.bar.big { min-height: 12px; }
+scale.bar.big trough { min-height: 10px; border-radius: 6px; }
+scale.bar.big highlight, scale.bar.big progress { min-height: 10px; border-radius: 6px; }
+scale.bar slider { background-color: transparent; min-width: 0; min-height: 0; }
+
+scale.bar.cpu  highlight { background-color: #bf616a; }
+scale.bar.ram  highlight { background-color: #a3be8c; }
+scale.bar.disk highlight { background-color: #b48ead; }
+scale.bar.bat  highlight { background-color: #a3be8c; }
+scale.bar.bri  highlight { background-color: #ebcb8b; }
+scale.bar.pbar highlight { background-color: #d08770; }
+
+/* Quick buttons */
+.qbtn {
+  font-size: 16px; color: #eceff4;
+  padding: 8px 14px; border-radius: 8px;
+  background-color: #3b4252;
+  border: 1px solid rgba(143,188,187,0.15);
+}
+.qbtn:hover { background-color: #4c566a; }
+.qbtn.on {
+  background-color: #88c0d0; color: #2e3440;
+  border-color: #88c0d0;
+}
+
+/* Player */
+.art {
+  min-width: 56px; min-height: 56px; border-radius: 6px;
+  background-size: cover; background-position: center;
+  background-color: #3b4252; border: 1px solid #4c566a;
+}
+.ptitle  { font-size: 13px; color: #eceff4; font-weight: bold; }
+.partist { font-size: 11px; color: #d08770; }
+.palbum  { font-size: 10px; color: #81a1c1; font-style: italic; }
+
+.pcontrols { margin-top: 4px; }
+.pbtn {
+  font-size: 15px; color: #d8dee9;
+  padding: 4px 14px; border-radius: 6px;
+  background-color: #3b4252;
+}
+.pbtn:hover { background-color: #4c566a; color: #eceff4; }
+.pbtn.play {
+  font-size: 18px; color: #2e3440;
+  background-color: #88c0d0; padding: 4px 18px;
+}
+.pbtn.play:hover { background-color: #8fbcbb; }

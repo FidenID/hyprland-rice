@@ -1,0 +1,88 @@
+;; ============================================================
+;; THEME 3 - Glass Light + Calendar (matches waybar3)
+;; Translucent white tiles, dark text, calendar widget
+;; ============================================================
+
+(include "polls.yuck")
+
+(defwidget header []
+  (box :class "card glass" :orientation "v" :space-evenly false :spacing 8
+    (box :orientation "h" :space-evenly false :spacing 12
+      (box :class "avatar"
+           :style "background-image: url('${EWW_CONFIG_DIR}/assets/avatar.png');")
+      (box :orientation "v" :space-evenly false :valign "center" :hexpand true
+        (label :class "name" :halign "start" :text username)
+        (label :class "sub"  :halign "start" :text "@${hostname}")
+        (label :class "sub"  :halign "start" :text "  ${uptime}")))
+    (box :class "divider")
+    (box :orientation "h" :space-evenly true
+      (label :class "clock" :text time)
+      (label :class "date"  :text date_short))))
+
+(defwidget calendar-card []
+  (box :class "card glass" :orientation "v" :space-evenly false :spacing 4
+    (label :class "section" :halign "start" :text "CALENDAR")
+    (label :class "cal" :halign "start" :text cal)))
+
+(defwidget tile [icon name value bcls]
+  (box :class "tile" :orientation "v" :space-evenly false :spacing 4
+    (box :orientation "h"
+      (label :class "ticon" :text icon)
+      (label :class "tname" :halign "start" :hexpand true :text "  ${name}"))
+    (label :class "tval" :halign "start" :text "${value}%")
+    (scale :class "bar ${bcls}" :value value :min 0 :max 100 :active false)))
+
+(defwidget stats []
+  (box :class "card glass" :orientation "v" :space-evenly false :spacing 8
+    (label :class "section" :halign "start" :text "SYSTEM")
+    (box :orientation "h" :space-evenly true :spacing 8
+      (tile :icon "󰻠" :name "CPU"  :value cpu_usage  :bcls "cpu")
+      (tile :icon "" :name "RAM"  :value ram_usage  :bcls "ram"))
+    (box :orientation "h" :space-evenly true :spacing 8
+      (tile :icon "" :name "Disk" :value disk_usage :bcls "disk")
+      (tile :icon "" :name "Bat"  :value battery   :bcls "bat"))))
+
+(defwidget controls []
+  (box :class "card glass" :orientation "v" :space-evenly false :spacing 6
+    (box :orientation "h" :space-evenly false :spacing 8
+      (label :class "icon-md" :text "")
+      (scale :class "bar vol" :hexpand true :value volume :min 0 :max 100
+             :onchange "pamixer --set-volume {}")
+      (label :class "tval" :text "${volume}%"))
+    (box :orientation "h" :space-evenly false :spacing 8
+      (label :class "icon-md" :text "")
+      (scale :class "bar bri" :hexpand true :value brightness :min 0 :max 100
+             :onchange "brightnessctl set {}%")
+      (label :class "tval" :text "${brightness}%"))))
+
+(defwidget player []
+  (box :class "card glass" :orientation "v" :space-evenly false :spacing 6
+    (box :orientation "h" :space-evenly false :spacing 10
+      (box :class "art" :style "background-image: url('${player_art}');")
+      (box :orientation "v" :space-evenly false :valign "center" :hexpand true
+        (label :class "ptitle"  :halign "start" :limit-width 22 :text player_title)
+        (label :class "partist" :halign "start" :limit-width 24 :text player_artist)
+        (label :class "palbum"  :halign "start" :limit-width 24 :text player_album)))
+    (scale :class "bar pbar" :value player_pos :min 0 :max {player_len > 0 ? player_len : 1}
+           :onchange "playerctl position {}" :active true)
+    (box :orientation "h" :space-evenly true :class "pcontrols"
+      (button :class "pbtn" :onclick "playerctl previous"  "⏮")
+      (button :class "pbtn play" :onclick "playerctl play-pause"
+              {player_status == "Playing" ? "⏸" : "▶"})
+      (button :class "pbtn" :onclick "playerctl next" "⏭"))))
+
+(defwidget sidebar []
+  (box :class "sidebar" :orientation "v" :space-evenly false :spacing 6
+    (header) (calendar-card) (stats) (controls) (player)))
+
+(defwindow dashboard
+  :monitor 0
+  :geometry (geometry :x "12px" :y "4px" :width "330px" :height "92%"
+                      :anchor "right top")
+  :stacking "fg" :exclusive false :focusable false (sidebar))
+
+(defwindow sidebar-window
+  :monitor 0
+  :geometry (geometry :x "12px" :y "4px" :width "330px" :height "92%"
+                      :anchor "right top")
+  :stacking "fg" :exclusive false :focusable false (sidebar))

@@ -1,0 +1,63 @@
+;; ============================================================
+;; Shared pollers - used by all themes via (include "polls.yuck")
+;; ============================================================
+
+(defpoll time          :interval "10s" "date '+%H:%M'")
+(defpoll time_s        :interval "1s"  "date '+%H:%M:%S'")
+(defpoll date          :interval "60s" "date '+%A, %d %B %Y'")
+(defpoll date_short    :interval "60s" "date '+%a %d %b'")
+(defpoll cal           :interval "1h"  "cal --color=never | sed 's/^/ /'")
+
+(defpoll username      :interval "1h"  "whoami")
+(defpoll hostname      :interval "1h"  "hostname")
+(defpoll uptime        :interval "60s" "uptime -p | sed 's/up //'")
+(defpoll distro        :interval "1h"  "grep -E '^PRETTY_NAME' /etc/os-release | cut -d'\"' -f2 || echo Linux")
+
+(defpoll cpu_usage     :interval "2s"
+  "top -bn1 | grep 'Cpu(s)' | awk '{print 100 - $8}' | cut -d. -f1")
+(defpoll cpu_temp      :interval "5s"
+  "sensors 2>/dev/null | awk '/Tctl|Package id 0|Tdie/ {gsub(/[+°C]/,\"\",$2); print int($2); exit}' | grep . || echo 0")
+
+(defpoll ram_usage     :interval "2s"
+  "free | awk '/Mem:/ {printf \"%.0f\", $3/$2 * 100}'")
+(defpoll ram_text      :interval "2s"
+  "free -h | awk '/Mem:/ {print $3 \" / \" $2}'")
+
+(defpoll disk_usage    :interval "30s"
+  "df / | awk 'NR==2 {gsub(\"%\",\"\",$5); print $5}'")
+(defpoll disk_text     :interval "30s"
+  "df -h / | awk 'NR==2 {print $3 \" / \" $2}'")
+
+(defpoll battery       :interval "10s"
+  "cat /sys/class/power_supply/BAT0/capacity 2>/dev/null || cat /sys/class/power_supply/BAT1/capacity 2>/dev/null || echo 0")
+(defpoll battery_state :interval "10s"
+  "cat /sys/class/power_supply/BAT0/status 2>/dev/null || cat /sys/class/power_supply/BAT1/status 2>/dev/null || echo Unknown")
+
+(defpoll volume        :interval "1s"  "pamixer --get-volume 2>/dev/null || echo 0")
+(defpoll vol_muted     :interval "1s"  "pamixer --get-mute 2>/dev/null || echo false")
+(defpoll brightness    :interval "5s"
+  "brightnessctl -m 2>/dev/null | awk -F, '{gsub(\"%\",\"\",$4); print $4}' | grep . || echo 0")
+
+(defpoll net_ssid      :interval "5s"
+  "nmcli -t -f active,ssid dev wifi 2>/dev/null | awk -F: '$1==\"yes\"{print $2; exit}' | grep . || nmcli -t -f NAME,TYPE c show --active 2>/dev/null | awk -F: '/ethernet/{print $1; exit}' | grep . || iwgetid -r 2>/dev/null | grep . || echo 'Disconnected'")
+(defpoll net_ip        :interval "30s"
+  "ip -4 addr show scope global 2>/dev/null | awk '/inet /{print $2; exit}' | cut -d/ -f1 | grep . || echo '—'")
+
+(defpoll pkg_updates   :interval "1h"  "checkupdates 2>/dev/null | wc -l")
+(defpoll weather       :interval "30m"
+  "curl -s 'wttr.in/?format=%c+%t' 2>/dev/null || echo '—'")
+(defpoll active_win    :interval "1s"
+  "hyprctl activewindow -j 2>/dev/null | grep -oP '\"title\":\\s*\"\\K[^\"]+' | head -c 30 | grep . || echo '—'")
+
+;; Hyprland workspaces (active id)
+(defpoll ws_active     :interval "500ms"
+  "hyprctl activeworkspace -j 2>/dev/null | grep -oP '\"id\":\\s*\\K[0-9]+' || echo 1")
+
+;; Player
+(defpoll player_status :interval "1s" "playerctl status 2>/dev/null || echo 'Stopped'")
+(defpoll player_title  :interval "1s" "playerctl metadata title 2>/dev/null | head -c 40 || echo 'No song'")
+(defpoll player_artist :interval "1s" "playerctl metadata artist 2>/dev/null | head -c 40 || echo '—'")
+(defpoll player_album  :interval "2s" "playerctl metadata album 2>/dev/null | head -c 40 || echo ''")
+(defpoll player_art    :interval "2s" "playerctl metadata mpris:artUrl 2>/dev/null | sed 's|file://||' || echo ''")
+(defpoll player_pos    :interval "1s" "playerctl position 2>/dev/null | cut -d. -f1 | grep . || echo 0")
+(defpoll player_len    :interval "5s" "playerctl metadata mpris:length 2>/dev/null | awk '{printf \"%d\", $1/1000000}' | grep . || echo 1")

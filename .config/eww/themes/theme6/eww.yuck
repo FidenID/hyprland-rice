@@ -1,74 +1,115 @@
-;; --- POLLS ---
-(defpoll username    :interval "9999s" `whoami`)
-(defpoll uptime      :interval "60s"   `uptime -p | sed 's/up //'`)
-(defpoll bat-percent :interval "30s"   `cat /sys/class/power_supply/BAT1/capacity 2>/dev/null || echo 0`)
-(defpoll cpu-usage   :interval "3s"    `top -bn1 | grep "Cpu(s)" | awk '{print int($2)}'`)
-(defpoll ram-usage   :interval "5s"    `free | awk '/Mem:/{printf "%d", $3/$2*100}'`)
-(defpoll volume      :interval "1s"    `wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf "%d", $2*100}' || echo 0`)
+;; ============================================================
+;; THEME 1 - Tokyo Night Compact (matches waybar1)
+;; Vertical sidebar, dark cards, accent #7aa2f7
+;; Extra: workspaces dots + active window
+;; ============================================================
 
-;; Music Polls
-(defpoll music-title  :interval "1s" `playerctl metadata title || echo "Not Playing"`)
-(defpoll music-artist :interval "1s" `playerctl metadata artist || echo "Unknown Artist"`)
-(defpoll music-art    :interval "2s" `playerctl metadata mpris:artUrl || echo ""`)
-(defpoll music-status :interval "1s" `playerctl status || echo "Stopped"`)
+(include "polls.yuck")
 
-;; --- WIDGETS ---
+(defwidget header []
+  (box :class "card profile" :orientation "v" :space-evenly false :spacing 6
+    (box :orientation "h" :space-evenly false :spacing 10
+      (box :class "avatar"
+           :style "background-image: url('${EWW_CONFIG_DIR}/assets/avatar.png');")
+      (box :orientation "v" :space-evenly false :valign "center" :hexpand true
+        (label :class "name" :halign "start" :text username)
+        (label :class "host" :halign "start" :text "@${hostname}")
+        (label :class "up"   :halign "start" :text "  ${uptime}")))
+    (box :class "divider")
+    (box :orientation "h"
+      (label :class "clock"      :halign "start" :hexpand true :text time)
+      (label :class "date-small" :halign "end"   :text date_short))
+    (box :class "divider")
+    (label :class "active-win" :halign "start" :limit-width 28
+           :text "  ${active_win}")
+    (box :class "ws-row" :orientation "h" :space-evenly true
+      (label :class {ws_active == "1" ? "ws-dot active" : "ws-dot"} :text "●")
+      (label :class {ws_active == "2" ? "ws-dot active" : "ws-dot"} :text "●")
+      (label :class {ws_active == "3" ? "ws-dot active" : "ws-dot"} :text "●")
+      (label :class {ws_active == "4" ? "ws-dot active" : "ws-dot"} :text "●")
+      (label :class {ws_active == "5" ? "ws-dot active" : "ws-dot"} :text "●")
+      (label :class {ws_active == "6" ? "ws-dot active" : "ws-dot"} :text "●")
+      (label :class {ws_active == "7" ? "ws-dot active" : "ws-dot"} :text "●"))))
+
+(defwidget bat-card []
+  (box :class "card" :orientation "v" :space-evenly false :spacing 4
+    (box :orientation "h" :space-evenly false :spacing 10
+      (label :class "icon-lg" :text {battery_state == "Charging" ? "󱐋" :
+                                     battery >= 90 ? "󰁹" :
+                                     battery >= 60 ? "󰂀" :
+                                     battery >= 40 ? "󰁾" :
+                                     battery >= 20 ? "󰁼" : "󰁺"})
+      (box :orientation "v" :space-evenly false :hexpand true
+        (box :orientation "h"
+          (label :class "title" :halign "start" :hexpand true :text "Battery")
+          (label :class "value" :halign "end"   :text "${battery}%"))
+        (label :class "sub" :halign "start" :text battery_state)))
+    (scale :class "bar bat" :value battery :min 0 :max 100 :active false)))
+
+(defwidget res-row [icon name value text bcls]
+  (box :orientation "v" :space-evenly false :spacing 2
+    (box :orientation "h" :space-evenly false
+      (label :class "icon-md" :text icon)
+      (label :class "title" :halign "start" :hexpand true :text "  ${name}")
+      (label :class "value" :halign "end"   :text "${value}%"))
+    (scale :class "bar ${bcls}" :value value :min 0 :max 100 :active false)
+    (label :class "sub" :halign "start" :text text)))
+
+(defwidget resources []
+  (box :class "card" :orientation "v" :space-evenly false :spacing 8
+    (label :class "section" :halign "start" :text "SYSTEM")
+    (res-row :icon "" :name "CPU"  :value cpu_usage :text "${cpu_temp}°C" :bcls "cpu")
+    (res-row :icon "" :name "RAM"  :value ram_usage :text ram_text       :bcls "ram")
+    (res-row :icon "" :name "Disk" :value disk_usage :text disk_text     :bcls "disk")))
+
+(defwidget controls []
+  (box :class "card" :orientation "v" :space-evenly false :spacing 6
+    (label :class "section" :halign "start" :text "CONTROLS")
+    (box :orientation "h" :space-evenly false :spacing 8
+      (label :class "icon-md" :text {vol_muted == "true" ? "󰝟" : "󰕾"})
+      (scale :class "bar vol" :hexpand true :value volume :min 0 :max 100
+             :onchange "pamixer --set-volume {}")
+      (label :class "value" :text "${volume}%"))
+    (box :orientation "h" :space-evenly false :spacing 8
+      (label :class "icon-md" :text "󰃟")
+      (scale :class "bar bri" :hexpand true :value brightness :min 0 :max 100
+             :onchange "brightnessctl set {}%")
+      (label :class "value" :text "${brightness}%"))
+    (box :class "divider")
+    (box :orientation "h" :space-evenly false :spacing 10
+      (label :class "icon-md" :text {net_ssid == "Disconnected" ? "󰤭" : "󰤨"})
+      (box :orientation "v" :space-evenly false :hexpand true
+        (label :class "title" :halign "start" :text "Network")
+        (label :class "sub"   :halign "start" :text net_ssid)))))
+
+(defwidget player []
+  (box :class "card" :orientation "v" :space-evenly false :spacing 6
+    (box :orientation "h" :space-evenly false :spacing 10
+      (box :class "art" :style "background-image: url('${player_art}');")
+      (box :orientation "v" :space-evenly false :valign "center" :hexpand true
+        (label :class "ptitle"  :halign "start" :limit-width 22 :text player_title)
+        (label :class "partist" :halign "start" :limit-width 24 :text player_artist)
+        (label :class "palbum"  :halign "start" :limit-width 24 :text player_album)))
+    (scale :class "bar pbar" :value player_pos :min 0 :max {player_len > 0 ? player_len : 1}
+           :onchange "playerctl position {}" :active true)
+    (box :orientation "h" :space-evenly true :class "controls"
+      (button :class "pbtn" :onclick "playerctl previous"  "⏮")
+      (button :class "pbtn play" :onclick "playerctl play-pause"
+              {player_status == "Playing" ? "⏸" : "▶"})
+      (button :class "pbtn" :onclick "playerctl next" "⏭"))))
+
 (defwidget sidebar []
-  (box :class "sidebar-root" :orientation "v" :space-evenly false :spacing 10
-    
-    ;; PROFILE SECTION
-    (box :class "profile-box" :orientation "h" :space-evenly false :spacing 15
-      (box :class "avatar-wrap"
-        (box :class "avatar" :style "background-image: url('/home/miko/.config/eww/assets/avatar.png');"))
-      (box :orientation "v" :valign "center" :hexpand true
-        (label :class "username" :text "Miko" :halign "start")
-        (label :class "uptime-text" :text "up ${uptime}" :halign "start")))
+  (box :class "sidebar" :orientation "v" :space-evenly false :spacing 6
+    (header) (bat-card) (resources) (controls) (player)))
 
-    (box :class "divider")
-
-    ;; STATS RINGS (With Numbers)
-    (box :class "rings-box" :orientation "h" :space-evenly true
-      (box :orientation "v" :spacing 5
-        (overlay
-          (circular-progress :value cpu-usage :thickness 10 :class "cpu-ring" (label :text ""))
-          (label :text "${cpu-usage}%" :class "ring-value"))
-        (label :text "CPU" :class "ring-label"))
-      (box :orientation "v" :spacing 5
-        (overlay
-          (circular-progress :value ram-usage :thickness 10 :class "ram-ring" (label :text ""))
-          (label :text "${ram-usage}%" :class "ring-value"))
-        (label :text "RAM" :class "ring-label")))
-
-    (box :class "divider")
-
-    ;; MUSIC PLAYER SECTION
-    (box :class "music-card" :orientation "h" :spacing 12 :space-evenly false
-      (box :class "album-art" :style "background-image: url('${music-art}');")
-      (box :orientation "v" :valign "center" :hexpand true
-        (label :class "music-title" :text music-title :limit-width 15 :halign "start")
-        (label :class "music-artist" :text music-artist :limit-width 20 :halign "start")
-        (box :class "music-controls" :orientation "h" :halign "start" :spacing 10
-          (button :onclick "playerctl previous" "󰒮")
-          (button :onclick "playerctl play-pause" {music-status == "Playing" ? "󰏤" : "󰐊"})
-          (button :onclick "playerctl next" "󰒭"))))
-
-    (box :class "divider")
-
-    ;; VOLUME SLIDER
-    (box :class "slider-box" :orientation "h" :spacing 10 :space-evenly false
-      (label :text "󰕾" :class "sl-icon")
-      (scale :class "vol-slider" :hexpand true :min 0 :max 101 :value volume :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%")
-      (label :text "${volume}%" :class "sl-val"))
-
-    ;; POWER BUTTONS
-    (box :class "power-box" :orientation "h" :space-evenly true :spacing 10
-      (button :class "power-btn shutdown" :onclick "systemctl poweroff" "󰐥")
-      (button :class "power-btn reboot" :onclick "systemctl reboot" "󰜉")
-      (button :class "power-btn lock" :onclick "hyprlock" "󰍁"))
-  ))
+(defwindow dashboard
+  :monitor 0
+  :geometry (geometry :x "10px" :y "4px" :width "310px" :height "84%"
+                      :anchor "right top")
+  :stacking "fg" :exclusive false :focusable false (sidebar))
 
 (defwindow sidebar-window
   :monitor 0
-  :geometry (geometry :x "15px" :y "15px" :width "320px" :anchor "top right")
-  :stacking "overlay"
-  (sidebar))
+  :geometry (geometry :x "10px" :y "4px" :width "310px" :height "84%"
+                      :anchor "right top")
+  :stacking "fg" :exclusive false :focusable false (sidebar))

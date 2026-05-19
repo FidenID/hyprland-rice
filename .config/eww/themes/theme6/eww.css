@@ -1,51 +1,87 @@
-* { all: unset; font-family: "JetBrainsMono Nerd Font", sans-serif; }
-
-.sidebar-root { 
-    background-color: #1e1e2e; 
-    border: 2px solid #313244; 
-    border-radius: 24px; 
-    padding: 20px;
+/* THEME 1 - Tokyo Night Compact */
+* {
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font", "Iosevka Nerd Font", sans-serif;
+  font-size: 12px;
 }
 
-/* Profile */
-.avatar-wrap { 
-    background: linear-gradient(to bottom, #89b4fa, #cba6f7);
-    padding: 3px; border-radius: 15px; 
-}
-.avatar { 
-    min-width: 55px; min-height: 55px; 
-    border-radius: 12px; background-size: cover; background-position: center;
-    background-color: #313244;
-}
-.username { font-size: 18px; font-weight: bold; color: #cdd6f4; }
-.uptime-text { font-size: 11px; color: #a6adc8; }
+.sidebar { background-color: transparent; padding: 6px; color: #c0caf5; }
 
-/* Stats Rings & Values */
-circular-progress { min-height: 75px; min-width: 75px; background-color: #313244; }
-.cpu-ring { color: #f38ba8; }
-.ram-ring { color: #89b4fa; }
-.ring-value { font-size: 12px; font-weight: bold; color: #cdd6f4; }
-.ring-label { font-size: 11px; color: #bac2de; margin-top: 5px; }
-
-/* Music Card */
-.music-card { 
-    background-color: #313244; 
-    padding: 12px; border-radius: 16px; 
+.card {
+  background-color: rgba(26, 27, 38, 0.88);
+  border: 1px solid rgba(122, 162, 247, 0.20);
+  border-radius: 10px;
+  padding: 8px 10px;
+  color: #c0caf5;
 }
-.album-art { 
-    min-width: 60px; min-height: 60px; 
-    border-radius: 10px; background-size: cover; 
-    background-color: #1e1e2e;
+
+.divider {
+  background-color: rgba(122, 162, 247, 0.10);
+  min-height: 1px; margin: 4px 0;
 }
-.music-title { font-size: 14px; font-weight: bold; color: #cdd6f4; }
-.music-artist { font-size: 11px; color: #a6adc8; }
-.music-controls button { font-size: 18px; color: #89b4fa; margin-top: 5px; }
 
-/* Divider */
-.divider { background-color: #313244; min-height: 2px; margin: 15px 5px; }
+.avatar {
+  min-width: 42px; min-height: 42px; border-radius: 50%;
+  background-size: cover; background-position: center;
+  background-color: #1a1b26; border: 2px solid #7aa2f7;
+}
 
-/* Slider & Power */
-scale trough { background-color: #313244; border-radius: 10px; min-height: 10px; }
-scale highlight { background-color: #89b4fa; border-radius: 10px; }
-.power-btn { background-color: #313244; padding: 12px; border-radius: 12px; font-size: 20px; }
-.shutdown { color: #f38ba8; } .reboot { color: #fab387; } .lock { color: #f9e2af; }
+.name { font-size: 14px; font-weight: bold; color: #c0caf5; }
+.host { color: #565f89; font-size: 11px; }
+.up   { color: #414868; font-size: 10px; }
+
+.clock      { font-size: 16px; font-weight: bold; color: #7aa2f7; }
+.date-small { color: #9aa5ce; font-size: 11px; }
+.active-win { color: #9ece6a; font-size: 11px; }
+
+.section { font-size: 10px; font-weight: bold; color: #bb9af7; letter-spacing: 1px; }
+.title   { color: #c0caf5; font-size: 12px; font-weight: bold; }
+.value   { color: #9aa5ce; font-size: 12px; }
+.sub     { color: #565f89; font-size: 10px; }
+
+.icon-lg { font-size: 22px; color: #7aa2f7; padding: 0 4px; }
+.icon-md { font-size: 15px; color: #7aa2f7; min-width: 20px; }
+
+.ws-row { padding: 2px 0; }
+.ws-dot {
+  font-size: 10px; color: #414868;
+  padding: 0 6px; transition: 200ms;
+}
+.ws-dot.active { color: #7aa2f7; font-size: 13px; }
+
+scale.bar { min-height: 6px; margin: 2px 0; }
+scale.bar trough { min-height: 5px; background-color: #292e42; border-radius: 999px; }
+scale.bar highlight, scale.bar progress {
+  min-height: 5px; border-radius: 999px; background-color: #7aa2f7;
+}
+scale.bar slider { background-color: transparent; min-width: 0; min-height: 0; }
+
+scale.bar.bat   highlight { background-color: #9ece6a; }
+scale.bar.cpu   highlight { background-color: #f7768e; }
+scale.bar.ram   highlight { background-color: #e0af68; }
+scale.bar.disk  highlight { background-color: #bb9af7; }
+scale.bar.vol   highlight { background-color: #0db9d7; }
+scale.bar.bri   highlight { background-color: #e0af68; }
+scale.bar.pbar  highlight { background-color: #ff9e64; }
+
+.art {
+  min-width: 48px; min-height: 48px; border-radius: 8px;
+  background-size: cover; background-position: center;
+  background-color: #292e42; border: 1px solid rgba(122,162,247,0.15);
+}
+.ptitle  { font-size: 13px; font-weight: bold; color: #c0caf5; }
+.partist { font-size: 11px; color: #ff9e64; }
+.palbum  { font-size: 10px; color: #565f89; font-style: italic; }
+
+.controls { margin-top: 4px; }
+.pbtn {
+  font-size: 15px; color: #9aa5ce;
+  padding: 4px 12px; border-radius: 999px;
+  background-color: rgba(255,255,255,0.04);
+}
+.pbtn:hover { background-color: #292e42; color: #c0caf5; }
+.pbtn.play {
+  font-size: 18px; color: #1a1b26; background-color: #7aa2f7;
+  padding: 4px 16px;
+}
+.pbtn.play:hover { background-color: #bb9af7; }
