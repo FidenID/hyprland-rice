@@ -31,7 +31,8 @@
     "custom/dot-alt",
     "network",
     "custom/dot-alt",
-    "clock"
+    "clock",
+    "custom/power"
   ],
 
   "custom/launcher": {
@@ -132,6 +133,13 @@
       "active": "",
       "default": ""
     }
+  },
+  "custom/power": {
+        "format": "󰮯",
+    	"tooltip": false,
+   	"on-click": "eww open --toggle dashboard",
+   	"on-click-right": "eww kill",
+   	"interval": "once"
   }
 }
 

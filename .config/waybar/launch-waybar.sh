@@ -33,17 +33,16 @@ if [[ -d "$EWW_THEME_DIR" ]]; then
   # Kill EWW jika sedang berjalan
   eww kill 2>/dev/null
   sleep 0.2
-  
+
+  # Hapus eww.scss kalau ada (eww memprioritaskan .scss di atas .css)
+  rm -f "$EWW_DIR/eww.scss"
+
   # Copy konfigurasi dan CSS dari tema
   cp "$EWW_THEME_DIR/eww.yuck" "$EWW_DIR/eww.yuck"
-  cp "$EWW_THEME_DIR/eww.css" "$EWW_DIR/eww.css"
-  
-  # Restart EWW (opsional: jalankan windows tertentu)
-  # eww daemon &     # Jika perlu daemon
-  # sleep 0.2
-  # eww open bar     # Buka widget bar
-  # eww open music   # Buka widget music dll
-  
+  cp "$EWW_THEME_DIR/eww.css"  "$EWW_DIR/eww.css"
+
+  # Restart EWW daemon (sidebar dibuka on-demand via tombol power di waybar)
+  eww daemon &
   echo "✓ EWW theme $NUM applied (config + css)"
 else
   echo "⚠ EWW theme directory $EWW_THEME_DIR not found, skipping..."

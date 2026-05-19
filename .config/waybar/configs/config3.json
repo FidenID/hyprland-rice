@@ -128,7 +128,7 @@
   "custom/power": {
         "format": "󰮯",
     	"tooltip": false,
-   	"on-click": "eww open --toggle sidebar-window",
+   	"on-click": "eww open --toggle dashboard",
    	"on-click-right": "eww kill",
    	"interval": "once"
     },

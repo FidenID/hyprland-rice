@@ -61,7 +61,9 @@ window#waybar {
 #pulseaudio { color: #e0af68; }
 #network { color: #7dcfff; }
 #cpu { color: #f7768e; }
-#memory { color: #9ece6a; }
+#memory {
+    color: #9ece6a;
+}
 #battery { color: #9ece6a; }
 #battery.warning { color: #e0af68; }
 #battery.critical { color: #f7768e; }
@@ -70,3 +72,11 @@ window#waybar {
     background-color: rgba(41, 42, 60, 0.5);
 }
 
+#custom-power {
+    background-color:rgba(41, 42, 60, 0.5);
+    padding: 0 12px;
+    border-radius: 10;
+    margin: 3px 2px;
+    border: none;
+
+}
